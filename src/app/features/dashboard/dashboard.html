@@ -1,0 +1,139 @@
+<div class="space-y-6">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-white">My Dashboard</h1>
+        <div class="text-sm text-gray-400">Overview of your fitness journey</div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Total Workouts -->
+        <div
+            class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg hover:border-blue-500/50 transition-colors duration-300">
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-gray-400 text-sm font-medium mb-1">Total Workouts</p>
+                    <h3 class="text-3xl font-bold text-white">{{ totalWorkouts() }}</h3>
+                </div>
+                <div class="bg-blue-500/10 p-3 rounded-lg text-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m6.5 6.5 11 11" />
+                        <path d="m21 21-1-1" />
+                        <path d="m3 3 1 1" />
+                        <path d="m18 22 4-4" />
+                        <path d="m2 6 4-4" />
+                        <path d="m3 10 7-7" />
+                        <path d="m14 21 7-7" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Exercises -->
+        <div
+            class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg hover:border-purple-500/50 transition-colors duration-300">
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-gray-400 text-sm font-medium mb-1">Total Exercises</p>
+                    <h3 class="text-3xl font-bold text-white">{{ totalExercises() }}</h3>
+                </div>
+                <div class="bg-purple-500/10 p-3 rounded-lg text-purple-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m16 6 4 14" />
+                        <path d="M12 6v14" />
+                        <path d="M8 8v12" />
+                        <path d="M4 4v16" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Sets -->
+        <div
+            class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg hover:border-green-500/50 transition-colors duration-300">
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-gray-400 text-sm font-medium mb-1">Total Sets</p>
+                    <h3 class="text-3xl font-bold text-white">{{ totalSets() }}</h3>
+                </div>
+                <div class="bg-green-500/10 p-3 rounded-lg text-green-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                        <path d="M3 3v5h5" />
+                        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+                        <path d="M16 16h5v5" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Volume -->
+        <div
+            class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg hover:border-orange-500/50 transition-colors duration-300">
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-gray-400 text-sm font-medium mb-1">Volume Moved</p>
+                    <h3 class="text-3xl font-bold text-white tracking-tight">{{ totalVolume() | number }} <span
+                            class="text-sm text-gray-500 font-normal">kg</span></h3>
+                </div>
+                <!-- Layers/Stack Icon for Volume (Accumulation) -->
+                <div class="bg-orange-500/10 p-3 rounded-lg text-orange-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                        <polyline points="2 17 12 22 22 17" />
+                        <polyline points="2 12 12 17 22 12" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Stack -->
+    <!-- col-span-full added defensively: if this somehow ends up in a grid, it will span all columns. -->
+    <div class="space-y-6 mt-6 col-span-full">
+
+        <!-- Activity Chart -->
+        <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg" style="height: 350px;">
+            <div class="relative w-full h-full">
+                <canvas baseChart [data]="barChartData()" [options]="barChartOptions" [type]="barChartType">
+                </canvas>
+            </div>
+        </div>
+
+        <!-- Strength Progression -->
+        <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg" style="height: 400px;">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-gray-300 font-semibold">Strength Progression</h3>
+                <div class="flex items-center space-x-2">
+                    <label class="text-xs text-gray-500 uppercase font-bold">Exercise:</label>
+                    <select [ngModel]="selectedExercise()" (ngModelChange)="selectedExercise.set($event)"
+                        class="bg-gray-900 border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5">
+                        <option *ngFor="let ex of availableExercises()" [value]="ex">{{ ex }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="relative w-full h-72 flex items-center justify-center">
+                <canvas *ngIf="lineChartData().datasets[0].data.length > 0" baseChart [data]="lineChartData()"
+                    [options]="lineChartOptions" [type]="lineChartType">
+                </canvas>
+                <div *ngIf="lineChartData().datasets[0].data.length === 0" class="text-gray-500 italic text-center">
+                    <p>No data available for this exercise.</p>
+                    <p class="text-sm">Log some workouts to see your progress!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Muscle Distribution -->
+        <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg" style="height: 400px;">
+            <div class="relative w-full h-full flex justify-center">
+                <canvas baseChart [data]="doughnutChartData()" [options]="doughnutChartOptions"
+                    [type]="doughnutChartType">
+                </canvas>
+            </div>
+        </div>
+
+    </div>
+</div>
