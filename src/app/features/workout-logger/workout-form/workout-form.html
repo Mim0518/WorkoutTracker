@@ -7,7 +7,10 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
         </a>
-        <h1 class="text-3xl font-bold text-white">{{ isEditMode ? 'Edit' : 'Log' }} Workout</h1>
+        <h1 class="text-3xl font-bold text-white">
+            <ng-container *ngIf="isEditMode" i18n="@@workout.title.edit">Edit Workout</ng-container>
+            <ng-container *ngIf="!isEditMode" i18n="@@workout.title.log">Log Workout</ng-container>
+        </h1>
     </div>
 
     <form [formGroup]="workoutForm" (ngSubmit)="onSubmit()" class="space-y-8">
@@ -15,13 +18,14 @@
         <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-xl">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Workout Name</label>
+                    <label i18n="@@workout.nameLabel" class="block text-sm font-medium text-gray-400 mb-2">Workout
+                        Name</label>
                     <input type="text" formControlName="name"
                         class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
-                        placeholder="e.g. Legs Day">
+                        placeholder="e.g. Legs Day" i18n-placeholder="@@workout.namePlaceholder">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Date</label>
+                    <label i18n="@@workout.dateLabel" class="block text-sm font-medium text-gray-400 mb-2">Date</label>
                     <input type="date" formControlName="date"
                         class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
                 </div>
@@ -42,7 +46,8 @@
                             <input type="text" formControlName="name" (focus)="openDropdown(i)"
                                 (input)="onSearchInput($event, i)"
                                 class="bg-gray-800 border-0 border-b border-transparent focus:border-blue-500 text-white font-semibold w-full focus:ring-0 px-2 py-1 placeholder-gray-500 rounded transition-colors"
-                                placeholder="Exercise Name (e.g. Bench Press)" autocomplete="off">
+                                placeholder="Exercise Name (e.g. Bench Press)"
+                                i18n-placeholder="@@workout.exercisePlaceholder" autocomplete="off">
 
                             <!-- Dropdown Results -->
                             <div *ngIf="activeDropdownIndex === i"
@@ -53,7 +58,7 @@
                                         {{ ex }}
                                     </li>
                                     <li *ngIf="filteredExercises.length === 0"
-                                        class="px-4 py-2 text-sm text-gray-500 italic">
+                                        class="px-4 py-2 text-sm text-gray-500 italic" i18n="@@workout.noMatches">
                                         No matches found. Custom exercise will be added.
                                     </li>
                                 </ul>
@@ -73,9 +78,9 @@
                 <div class="p-4 bg-gray-900/30 rounded-b-xl">
                     <div
                         class="grid grid-cols-10 gap-4 mb-2 text-xs font-medium text-gray-500 uppercase tracking-wider px-2">
-                        <div class="col-span-1 text-center">Set</div>
-                        <div class="col-span-4">Reps</div>
-                        <div class="col-span-4">Weight (kg)</div>
+                        <div i18n="@@workout.header.set" class="col-span-1 text-center">Set</div>
+                        <div i18n="@@workout.header.reps" class="col-span-4">Reps</div>
+                        <div i18n="@@workout.header.weight" class="col-span-4">Weight (kg)</div>
                         <div class="col-span-1"></div>
                     </div>
 
@@ -115,7 +120,7 @@
                                 d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Add Set
+                        <span i18n="@@workout.addSet">Add Set</span>
                     </button>
                 </div>
             </div>
@@ -130,12 +135,12 @@
                         d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                         clip-rule="evenodd" />
                 </svg>
-                Add Exercise
+                <span i18n="@@workout.addExercise">Add Exercise</span>
             </button>
 
             <button type="submit" [disabled]="!workoutForm.valid"
                 class="flex-1 py-3 px-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:from-blue-500 hover:to-teal-500 transition-all font-bold disabled:opacity-50 disabled:cursor-not-allowed">
-                Save Workout
+                <span i18n="@@workout.saveWorkout">Save Workout</span>
             </button>
         </div>
     </form>

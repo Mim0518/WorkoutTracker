@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" target-language="es-MX" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="dashboard.title" datatype="html">
+        <source>Fitness Dashboard</source>
+        <target>Panel de Fitness</target>
+      </trans-unit>
+      <trans-unit id="dashboard.subtitle" datatype="html">
+        <source>Overview of your fitness journey</source>
+        <target>Resumen de tu progreso</target>
+      </trans-unit>
+      <trans-unit id="dashboard.totalWorkouts" datatype="html">
+        <source>Total Workouts</source>
+        <target>Entrenamientos Totales</target>
+      </trans-unit>
+      <trans-unit id="dashboard.totalExercises" datatype="html">
+        <source>Total Exercises</source>
+        <target>Ejercicios Totales</target>
+      </trans-unit>
+      <trans-unit id="dashboard.totalSets" datatype="html">
+        <source>Total Sets Performed</source>
+        <target>Series Realizadas</target>
+      </trans-unit>
+      <trans-unit id="dashboard.totalVolume" datatype="html">
+        <source>Volume Moved</source>
+        <target>Volumen Total</target>
+      </trans-unit>
+      <trans-unit id="dashboard.strengthProgression" datatype="html">
+        <source>Strength Progression</source>
+        <target>Progreso de Fuerza</target>
+      </trans-unit>
+      <trans-unit id="dashboard.exerciseLabel" datatype="html">
+        <source>Exercise:</source>
+        <target>Ejercicio:</target>
+      </trans-unit>
+      <trans-unit id="dashboard.noDataExercise" datatype="html">
+        <source>No data available for this exercise.</source>
+        <target>No hay datos para este ejercicio.</target>
+      </trans-unit>
+      <trans-unit id="dashboard.logWorkoutsHint" datatype="html">
+        <source>Log some workouts to see your progress!</source>
+        <target>¡Registra entrenamientos para ver tu progreso!</target>
+      </trans-unit>
+      <trans-unit id="dashboard.e1rm" datatype="html">
+        <source>Estimated 1RM: <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span
+                        class=&quot;text-blue-400&quot;&gt;"/><x id="INTERPOLATION" equiv-text="{{ selectedExercise()
+                        }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>1RM Estimado: <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;text-blue-400&quot;&gt;"/><x id="INTERPOLATION" equiv-text="{{ selectedExercise() }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="dashboard.noDataE1rm" datatype="html">
+        <source>No data available for E1RM calculation.</source>
+        <target>No hay datos para calcular 1RM.</target>
+      </trans-unit>
+      <trans-unit id="dashboard.logWorkoutsWeightHint" datatype="html">
+        <source>Log some workouts with weight and reps!</source>
+        <target>¡Registra entrenamientos con peso y repeticiones!</target>
+      </trans-unit>
+      <trans-unit id="workout.title.edit" datatype="html">
+        <source>Edit Workout</source>
+        <target>Editar Entrenamiento</target>
+      </trans-unit>
+      <trans-unit id="workout.title.log" datatype="html">
+        <source>Log Workout</source>
+        <target>Registrar Entrenamiento</target>
+      </trans-unit>
+      <trans-unit id="workout.nameLabel" datatype="html">
+        <source>Workout Name</source>
+        <target>Nombre del Entrenamiento</target>
+      </trans-unit>
+      <trans-unit id="workout.namePlaceholder" datatype="html">
+        <source>e.g. Legs Day</source>
+        <target>ej. Día de Pierna</target>
+      </trans-unit>
+      <trans-unit id="workout.dateLabel" datatype="html">
+        <source>Date</source>
+        <target>Fecha</target>
+      </trans-unit>
+      <trans-unit id="workout.exercisePlaceholder" datatype="html">
+        <source>Exercise Name (e.g. Bench Press)</source>
+        <target>Nombre del Ejercicio (ej. Press de Banca)</target>
+      </trans-unit>
+      <trans-unit id="workout.noMatches" datatype="html">
+        <source>No matches found. Custom exercise will be added.</source>
+        <target>No se encontraron resultados. Se agregará ejercicio personalizado.</target>
+      </trans-unit>
+      <trans-unit id="workout.header.set" datatype="html">
+        <source>Set</source>
+        <target>Serie</target>
+      </trans-unit>
+      <trans-unit id="workout.header.reps" datatype="html">
+        <source>Reps</source>
+        <target>Reps</target>
+      </trans-unit>
+      <trans-unit id="workout.header.weight" datatype="html">
+        <source>Weight (kg)</source>
+        <target>Peso (kg)</target>
+      </trans-unit>
+      <trans-unit id="workout.addSet" datatype="html">
+        <source>Add Set</source>
+        <target>Agregar Serie</target>
+      </trans-unit>
+      <trans-unit id="workout.addExercise" datatype="html">
+        <source>Add Exercise</source>
+        <target>Agregar Ejercicio</target>
+      </trans-unit>
+      <trans-unit id="workout.saveWorkout" datatype="html">
+        <source>Save Workout</source>
+        <target>Guardar Entrenamiento</target>
+      </trans-unit>
+      <trans-unit id="nav.stats" datatype="html">
+        <source>Stats</source>
+        <target>Estadísticas</target>
+      </trans-unit>
+      <trans-unit id="nav.workouts" datatype="html">
+        <source>Workouts</source>
+        <target>Entrenamientos</target>
+      </trans-unit>
+      <trans-unit id="nav.logNew" datatype="html">
+        <source>+ Log</source>
+        <target>+ Registrar</target>
+      </trans-unit>
+      <trans-unit id="workoutList.title" datatype="html">
+        <source>Your Workouts</source>
+        <target>Tus Entrenamientos</target>
+      </trans-unit>
+      <trans-unit id="workoutList.logButton" datatype="html">
+        <source>Log Workout</source>
+        <target>Registrar Entr.</target>
+      </trans-unit>
+      <trans-unit id="workoutList.emptyTitle" datatype="html">
+        <source>No workouts yet</source>
+        <target>Sin entrenamientos aún</target>
+      </trans-unit>
+      <trans-unit id="workoutList.emptySubtitle" datatype="html">
+        <source>Start tracking your fitness journey today!</source>
+        <target>¡Comienza hoy tu viaje fitness!</target>
+      </trans-unit>
+      <trans-unit id="workoutList.emptyLink" datatype="html">
+        <source>Log your first workout</source>
+        <target>Registra tu primer entrenamiento</target>
+      </trans-unit>
+      <trans-unit id="workoutList.exercisesCount" datatype="html">
+        <source>Exercises</source>
+        <target>Ejercicios</target>
+      </trans-unit>
+      <trans-unit id="workoutList.edit" datatype="html">
+        <source>Edit Workout</source>
+        <target>Editar Entrenamiento</target>
+      </trans-unit>
+      <trans-unit id="workoutList.delete" datatype="html">
+        <source>Delete Workout</source>
+        <target>Eliminar Entrenamiento</target>
+      </trans-unit>
+      <trans-unit id="workoutList.setsCount" datatype="html">
+        <source>sets</source>
+        <target>series</target>
+      </trans-unit>
+      <trans-unit id="workoutList.moreExercises" datatype="html">
+        <source>more exercises...</source>
+        <target>más ejercicios...</target>
+      </trans-unit>
+      <trans-unit id="workoutList.totalVolume" datatype="html">
+        <source>Total Volume</source>
+        <target>Volumen Total</target>
+      </trans-unit>
+      <trans-unit id="settings.title" datatype="html">
+        <source>Settings</source>
+        <target>Configuración</target>
+      </trans-unit>
+      <trans-unit id="settings.dataManagement" datatype="html">
+        <source>Data Management</source>
+        <target>Gestión de Datos</target>
+      </trans-unit>
+      <trans-unit id="settings.import" datatype="html">
+        <source>Import Data</source>
+        <target>Importar Datos</target>
+      </trans-unit>
+      <trans-unit id="settings.importDesc" datatype="html">
+        <source>Restore your history from a file</source>
+        <target>Restaurar historial desde archivo</target>
+      </trans-unit>
+      <trans-unit id="settings.clearData" datatype="html">
+        <source>Clear All Data</source>
+        <target>Borrar Todo</target>
+      </trans-unit>
+      <trans-unit id="settings.clearDataDesc" datatype="html">
+        <source>Permanently delete all workouts</source>
+        <target>Eliminar permanentemente todo</target>
+      </trans-unit>
+      <trans-unit id="settings.clearButton" datatype="html">
+        <source>Clear Data</source>
+        <target>Borrar Datos</target>
+      </trans-unit>
+      <trans-unit id="settings.close" datatype="html">
+        <source>Close</source>
+        <target>Cerrar</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

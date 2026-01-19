@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="nav.stats" datatype="html">
+        <source> Stats </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">13,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.workouts" datatype="html">
+        <source> Workouts </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">19,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.logNew" datatype="html">
+        <source>+ Log</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">23,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.title" datatype="html">
+        <source>Fitness Dashboard</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.subtitle" datatype="html">
+        <source>Overview of your fitness journey</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">4,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.totalWorkouts" datatype="html">
+        <source>Total Workouts </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.totalExercises" datatype="html">
+        <source>Total Exercises </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">38,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.totalSets" datatype="html">
+        <source>Total Sets Performed </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">59,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.totalVolume" datatype="html">
+        <source>Volume Moved</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">80,81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.strengthProgression" datatype="html">
+        <source>Strength Progression</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">112,113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.exerciseLabel" datatype="html">
+        <source>Exercise:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">115,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.noDataExercise" datatype="html">
+        <source>No data available for this exercise.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">127,128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.logWorkoutsHint" datatype="html">
+        <source>Log some workouts to see your progress!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">128,130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.e1rm" datatype="html">
+        <source>Estimated 1RM: <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span
+                        class=&quot;text-blue-400&quot;&gt;"/><x id="INTERPOLATION" equiv-text="{{ selectedExercise()
+                        }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">137,140</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.noDataE1rm" datatype="html">
+        <source>No data available for E1RM calculation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">146,147</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.logWorkoutsWeightHint" datatype="html">
+        <source>Log some workouts with weight and reps! </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">147,149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.title.edit" datatype="html">
+        <source>Edit Workout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.title.log" datatype="html">
+        <source>Log Workout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">12,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.nameLabel" datatype="html">
+        <source>Workout Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.namePlaceholder" datatype="html">
+        <source>e.g. Legs Day</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.dateLabel" datatype="html">
+        <source>Date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.exercisePlaceholder" datatype="html">
+        <source>Exercise Name (e.g. Bench Press)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.noMatches" datatype="html">
+        <source> No matches found. Custom exercise will be added. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.header.set" datatype="html">
+        <source>Set</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">81,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.header.reps" datatype="html">
+        <source>Reps</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">82,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.header.weight" datatype="html">
+        <source>Weight (kg)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">83,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.addSet" datatype="html">
+        <source>Add Set</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">123,124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.addExercise" datatype="html">
+        <source>Add Exercise</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">138,141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workout.saveWorkout" datatype="html">
+        <source>Save Workout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-form/workout-form.html</context>
+          <context context-type="linenumber">143,145</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.title" datatype="html">
+        <source>Your Workouts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.logButton" datatype="html">
+        <source>Log Workout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">6,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.emptyTitle" datatype="html">
+        <source>No workouts yet</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.emptySubtitle" datatype="html">
+        <source>Start tracking your fitness journey today!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.emptyLink" datatype="html">
+        <source>Log your first workout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.exercisesCount" datatype="html">
+        <source>Exercises</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">34,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.edit" datatype="html">
+        <source>Edit Workout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.delete" datatype="html">
+        <source>Delete Workout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.setsCount" datatype="html">
+        <source>sets</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.moreExercises" datatype="html">
+        <source>more exercises...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workoutList.totalVolume" datatype="html">
+        <source>Total Volume</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/workout-logger/workout-list/workout-list.html</context>
+          <context context-type="linenumber">73,74</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,81 @@
+<div *ngIf="isOpen" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" (click)="closeModal()"></div>
+
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Centering trick -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <!-- Modal Panel -->
+        <div
+            class="relative inline-block align-bottom bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full border border-gray-700">
+            <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div
+                        class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 sm:mx-0 sm:h-10 sm:w-10">
+                        <!-- Settings Icon -->
+                        <svg class="h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                        <h3 class="text-lg leading-6 font-medium text-white" id="modal-title" i18n="@@settings.title">
+                            Settings
+                        </h3>
+                        <div class="mt-4 space-y-4">
+                            <!-- Data Management Section -->
+                            <div class="border-t border-gray-700 pt-4">
+                                <h4 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-3"
+                                    i18n="@@settings.dataManagement">Data Management</h4>
+
+                                <div class="space-y-3">
+                                    <!-- Import Data (Placeholder) -->
+                                    <div class="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
+                                        <div>
+                                            <p class="text-sm font-medium text-white" i18n="@@settings.import">Import
+                                                Data</p>
+                                            <p class="text-xs text-gray-500" i18n="@@settings.importDesc">Restore your
+                                                history from a file</p>
+                                        </div>
+                                        <button disabled
+                                            class="px-3 py-1 bg-gray-700 text-gray-400 text-xs rounded cursor-not-allowed border border-gray-600">
+                                            Coming Soon
+                                        </button>
+                                    </div>
+
+                                    <!-- Clear Data (Danger) -->
+                                    <div
+                                        class="flex items-center justify-between p-3 bg-red-900/10 border border-red-900/30 rounded-lg">
+                                        <div>
+                                            <p class="text-sm font-medium text-red-400" i18n="@@settings.clearData">
+                                                Clear All Data</p>
+                                            <p class="text-xs text-red-500/70" i18n="@@settings.clearDataDesc">
+                                                Permanently delete all workouts</p>
+                                        </div>
+                                        <button (click)="confirmClear()"
+                                            class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded transition-colors"
+                                            i18n="@@settings.clearButton">
+                                            Clear Data
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-700/50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button type="button" (click)="closeModal()"
+                    class="w-full inline-flex justify-center rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    i18n="@@settings.close">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

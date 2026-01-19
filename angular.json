@@ -9,6 +9,12 @@
     "WorkoutTracker": {
       "projectType": "application",
       "schematics": {},
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "es-MX": "src/locale/messages.es-MX.xlf"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -26,6 +32,9 @@
             ],
             "styles": [
               "src/styles.css"
+            ],
+            "polyfills": [
+              "@angular/localize/init"
             ]
           },
           "configurations": {
@@ -48,6 +57,11 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "es-MX": {
+              "localize": [
+                "es-MX"
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -60,6 +74,9 @@
             },
             "development": {
               "buildTarget": "WorkoutTracker:build:development"
+            },
+            "es-MX": {
+              "buildTarget": "WorkoutTracker:build:es-MX"
             }
           },
           "defaultConfiguration": "development"

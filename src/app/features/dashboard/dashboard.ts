@@ -6,11 +6,12 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { EXERCISE_METADATA } from '../../models/exercise-list.data';
 import { FormsModule } from '@angular/forms';
+import { SettingsModalComponent } from '../settings/settings-modal/settings-modal';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective, FormsModule],
+  imports: [CommonModule, BaseChartDirective, FormsModule, SettingsModalComponent],
   templateUrl: './dashboard.html',
   styles: [`
         :host {
@@ -21,6 +22,17 @@ import { FormsModule } from '@angular/forms';
 export class DashboardComponent {
   private workoutService = inject(WorkoutService);
   workouts = this.workoutService.workouts;
+
+  // Settings Modal State
+  showSettings = signal(false);
+
+  openSettings() {
+    this.showSettings.set(true);
+  }
+
+  closeSettings() {
+    this.showSettings.set(false);
+  }
 
   // Stats
   totalWorkouts = computed(() => this.workouts().length);
@@ -215,6 +227,70 @@ export class DashboardComponent {
           pointBackgroundColor: '#10B981',
           fill: true,
           tension: 0.4 // Curve
+        }
+      ]
+    };
+  });
+
+  // 4. Estimated 1RM Progression (Line Chart)
+  public e1rmChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: 'Estimated 1RM Progression (kg)', color: '#9ca3af' }
+    },
+    scales: {
+      y: {
+        ticks: { color: '#9ca3af' },
+        grid: { color: '#374151' }
+      },
+      x: {
+        ticks: { color: '#9ca3af' },
+        grid: { color: '#374151' }
+      }
+    }
+  };
+
+  private calculateE1RM(weight: number, reps: number): number {
+    if (reps === 1) return weight;
+    // Epley Formula: Weight * (1 + Reps / 30)
+    return Math.round(weight * (1 + reps / 30));
+  }
+
+  public e1rmChartData = computed<ChartData<'line'>>(() => {
+    const exerciseName = this.selectedExercise();
+    const dataPoints: { date: Date, e1rm: number }[] = [];
+
+    this.workouts().forEach((w: Workout) => {
+      const matches = w.exercises.filter((e: any) => e.name === exerciseName);
+      if (matches.length > 0) {
+        let sessionBestE1RM = 0;
+        matches.forEach((m: any) => {
+          m.sets.forEach((s: any) => {
+            const currentE1RM = this.calculateE1RM(s.weight, s.reps);
+            if (currentE1RM > sessionBestE1RM) sessionBestE1RM = currentE1RM;
+          });
+        });
+        if (sessionBestE1RM > 0) {
+          dataPoints.push({ date: new Date(w.date), e1rm: sessionBestE1RM });
+        }
+      }
+    });
+
+    dataPoints.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    return {
+      labels: dataPoints.map(d => d.date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })),
+      datasets: [
+        {
+          data: dataPoints.map(d => d.e1rm),
+          label: 'Estimated 1RM',
+          borderColor: '#8B5CF6', // Purple-500
+          backgroundColor: 'rgba(139, 92, 246, 0.2)',
+          pointBackgroundColor: '#8B5CF6',
+          fill: true,
+          tension: 0.4
         }
       ]
     };

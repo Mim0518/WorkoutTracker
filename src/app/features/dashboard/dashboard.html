@@ -1,7 +1,19 @@
 <div class="space-y-6">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-white">My Dashboard</h1>
-        <div class="text-sm text-gray-400">Overview of your fitness journey</div>
+        <div>
+            <h1 i18n="@@dashboard.title" class="text-3xl font-bold text-white">Fitness Dashboard</h1>
+            <div i18n="@@dashboard.subtitle" class="text-sm text-gray-400">Overview of your fitness journey</div>
+        </div>
+        <button (click)="openSettings()"
+            class="bg-gray-800 p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        </button>
     </div>
 
     <!-- Summary Cards -->
@@ -11,7 +23,8 @@
             class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg hover:border-blue-500/50 transition-colors duration-300">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-gray-400 text-sm font-medium mb-1">Total Workouts</p>
+                    <p i18n="@@dashboard.totalWorkouts" class="text-gray-400 text-sm font-medium mb-1">Total Workouts
+                    </p>
                     <h3 class="text-3xl font-bold text-white">{{ totalWorkouts() }}</h3>
                 </div>
                 <div class="bg-blue-500/10 p-3 rounded-lg text-blue-500">
@@ -34,7 +47,8 @@
             class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg hover:border-purple-500/50 transition-colors duration-300">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-gray-400 text-sm font-medium mb-1">Total Exercises</p>
+                    <p i18n="@@dashboard.totalExercises" class="text-gray-400 text-sm font-medium mb-1">Total Exercises
+                    </p>
                     <h3 class="text-3xl font-bold text-white">{{ totalExercises() }}</h3>
                 </div>
                 <div class="bg-purple-500/10 p-3 rounded-lg text-purple-500">
@@ -54,7 +68,8 @@
             class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg hover:border-green-500/50 transition-colors duration-300">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-gray-400 text-sm font-medium mb-1">Total Sets</p>
+                    <p i18n="@@dashboard.totalSets" class="text-gray-400 text-sm font-medium mb-1">Total Sets Performed
+                    </p>
                     <h3 class="text-3xl font-bold text-white">{{ totalSets() }}</h3>
                 </div>
                 <div class="bg-green-500/10 p-3 rounded-lg text-green-500">
@@ -74,7 +89,7 @@
             class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg hover:border-orange-500/50 transition-colors duration-300">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-gray-400 text-sm font-medium mb-1">Volume Moved</p>
+                    <p i18n="@@dashboard.totalVolume" class="text-gray-400 text-sm font-medium mb-1">Volume Moved</p>
                     <h3 class="text-3xl font-bold text-white tracking-tight">{{ totalVolume() | number }} <span
                             class="text-sm text-gray-500 font-normal">kg</span></h3>
                 </div>
@@ -106,9 +121,10 @@
         <!-- Strength Progression -->
         <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg" style="height: 400px;">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-gray-300 font-semibold">Strength Progression</h3>
+                <h3 i18n="@@dashboard.strengthProgression" class="text-gray-300 font-semibold">Strength Progression</h3>
                 <div class="flex items-center space-x-2">
-                    <label class="text-xs text-gray-500 uppercase font-bold">Exercise:</label>
+                    <label i18n="@@dashboard.exerciseLabel"
+                        class="text-xs text-gray-500 uppercase font-bold">Exercise:</label>
                     <select [ngModel]="selectedExercise()" (ngModelChange)="selectedExercise.set($event)"
                         class="bg-gray-900 border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5">
                         <option *ngFor="let ex of availableExercises()" [value]="ex">{{ ex }}</option>
@@ -120,12 +136,31 @@
                     [options]="lineChartOptions" [type]="lineChartType">
                 </canvas>
                 <div *ngIf="lineChartData().datasets[0].data.length === 0" class="text-gray-500 italic text-center">
-                    <p>No data available for this exercise.</p>
-                    <p class="text-sm">Log some workouts to see your progress!</p>
+                    <p i18n="@@dashboard.noDataExercise">No data available for this exercise.</p>
+                    <p i18n="@@dashboard.logWorkoutsHint" class="text-sm">Log some workouts to see your progress!</p>
                 </div>
             </div>
         </div>
 
+        <!-- Estimated 1RM Progression -->
+        <!-- col-span-full added defensively -->
+        <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg col-span-full" style="height: 400px;">
+            <div class="flex justify-between items-center mb-4">
+                <h3 i18n="@@dashboard.e1rm" class="text-gray-300 font-semibold">Estimated 1RM: <span
+                        class="text-blue-400">{{ selectedExercise()
+                        }}</span></h3>
+            </div>
+            <div class="relative w-full h-72 flex items-center justify-center">
+                <canvas *ngIf="e1rmChartData().datasets[0].data.length > 0" baseChart [data]="e1rmChartData()"
+                    [options]="e1rmChartOptions" [type]="lineChartType">
+                </canvas>
+                <div *ngIf="e1rmChartData().datasets[0].data.length === 0" class="text-gray-500 italic text-center">
+                    <p i18n="@@dashboard.noDataE1rm">No data available for E1RM calculation.</p>
+                    <p i18n="@@dashboard.logWorkoutsWeightHint" class="text-sm">Log some workouts with weight and reps!
+                    </p>
+                </div>
+            </div>
+        </div>
         <!-- Muscle Distribution -->
         <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg" style="height: 400px;">
             <div class="relative w-full h-full flex justify-center">
@@ -136,4 +171,7 @@
         </div>
 
     </div>
+
+    <!-- Settings Modal -->
+    <app-settings-modal [isOpen]="showSettings()" (close)="closeSettings()"></app-settings-modal>
 </div>

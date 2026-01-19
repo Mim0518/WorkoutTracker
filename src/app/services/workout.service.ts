@@ -1,57 +1,63 @@
-import { Injectable, signal, computed, effect } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { Workout } from '../models/workout.model';
+import { db } from '../db/workout-db';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WorkoutService {
     private workoutsSignal = signal<Workout[]>([]);
-    private readonly storageKey = 'workout-tracker-data';
 
     workouts = computed(() => this.workoutsSignal());
 
     constructor() {
         this.loadWorkouts();
-
-        // Auto-save effect
-        effect(() => {
-            this.saveWorkouts(this.workoutsSignal());
-        });
     }
 
-    private loadWorkouts() {
-        const data = localStorage.getItem(this.storageKey);
-        if (data) {
-            try {
-                const workouts = JSON.parse(data);
-                // Restore Date objects potentially if stored as strings
-                const parsedWorkouts = workouts.map((w: any) => ({
-                    ...w,
-                    date: new Date(w.date)
-                }));
-                this.workoutsSignal.set(parsedWorkouts);
-            } catch (e) {
-                console.error('Failed to parse workouts', e);
-            }
+    private async loadWorkouts() {
+        try {
+            const workouts = await db.workouts.orderBy('date').reverse().toArray();
+            this.workoutsSignal.set(workouts);
+        } catch (error) {
+            console.error('Failed to load workouts from DB', error);
         }
     }
 
-    private saveWorkouts(workouts: Workout[]) {
-        localStorage.setItem(this.storageKey, JSON.stringify(workouts));
+    async addWorkout(workout: Workout) {
+        try {
+            await db.workouts.add(workout);
+            // Reload to ensure consistency (or we could optimistically update the signal)
+            await this.loadWorkouts();
+        } catch (error) {
+            console.error('Failed to add workout', error);
+        }
     }
 
-    addWorkout(workout: Workout) {
-        this.workoutsSignal.update(current => [workout, ...current]);
+    async updateWorkout(updatedWorkout: Workout) {
+        try {
+            await db.workouts.put(updatedWorkout);
+            await this.loadWorkouts();
+        } catch (error) {
+            console.error('Failed to update workout', error);
+        }
     }
 
-    updateWorkout(updatedWorkout: Workout) {
-        this.workoutsSignal.update(current =>
-            current.map(w => w.id === updatedWorkout.id ? updatedWorkout : w)
-        );
+    async deleteWorkout(id: string) {
+        try {
+            await db.workouts.delete(id);
+            await this.loadWorkouts();
+        } catch (error) {
+            console.error('Failed to delete workout', error);
+        }
     }
 
-    deleteWorkout(id: string) {
-        this.workoutsSignal.update(current => current.filter(w => w.id !== id));
+    async clearDatabase() {
+        try {
+            await db.delete();
+            window.location.reload();
+        } catch (error) {
+            console.error('Failed to clear database', error);
+        }
     }
 
     getWorkout(id: string) {
