@@ -27,70 +27,133 @@
         <source>Fitness Dashboard</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">3,4</context>
+          <context context-type="linenumber">4,5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.subtitle" datatype="html">
         <source>Overview of your fitness journey</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">4,7</context>
+          <context context-type="linenumber">5,7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.totalWorkouts" datatype="html">
         <source>Total Workouts </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">14,16</context>
+          <context context-type="linenumber">26,28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.totalExercises" datatype="html">
         <source>Total Exercises </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">38,40</context>
+          <context context-type="linenumber">50,52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.totalSets" datatype="html">
         <source>Total Sets Performed </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">59,61</context>
+          <context context-type="linenumber">71,73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.totalVolume" datatype="html">
         <source>Volume Moved</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">80,81</context>
+          <context context-type="linenumber">92,93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.unitTonnes" datatype="html">
+        <source>Tonnes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">96,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.unitKg" datatype="html">
+        <source>kg</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">100,101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.title" datatype="html">
+        <source>Consistency</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">125,126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.lastYear" datatype="html">
+        <source>Last 365 Days</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">126,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.streakLabel" datatype="html">
+        <source>Weekly Streak:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.weeks" datatype="html">
+        <source>Weeks</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">129,131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.legend.rest" datatype="html">
+        <source>Rest</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">134,135</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.legend.max" datatype="html">
+        <source>Max</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">139,141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.tip" datatype="html">
+        <source>&quot;Consistency &gt; Intensity. Rest days fuel growth.&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
+          <context context-type="linenumber">174,176</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.strengthProgression" datatype="html">
         <source>Strength Progression</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">112,113</context>
+          <context context-type="linenumber">190,191</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.exerciseLabel" datatype="html">
         <source>Exercise:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">115,116</context>
+          <context context-type="linenumber">193,194</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.noDataExercise" datatype="html">
         <source>No data available for this exercise.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">127,128</context>
+          <context context-type="linenumber">205,206</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.logWorkoutsHint" datatype="html">
         <source>Log some workouts to see your progress!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">128,130</context>
+          <context context-type="linenumber">206,208</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.e1rm" datatype="html">
@@ -99,21 +162,161 @@
                         }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">137,140</context>
+          <context context-type="linenumber">215,218</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.noDataE1rm" datatype="html">
         <source>No data available for E1RM calculation.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">146,147</context>
+          <context context-type="linenumber">224,225</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.logWorkoutsWeightHint" datatype="html">
         <source>Log some workouts with weight and reps! </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/dashboard/dashboard.html</context>
-          <context context-type="linenumber">147,149</context>
+          <context context-type="linenumber">225,227</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.title" datatype="html">
+        <source> Settings </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.dataManagement" datatype="html">
+        <source>Data Management</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">34,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.export" datatype="html">
+        <source>Export Data</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.exportDesc" datatype="html">
+        <source>Download a backup of your history</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">42,43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.exportButton" datatype="html">
+        <source> Export </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.import" datatype="html">
+        <source>Import Data</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.importDesc" datatype="html">
+        <source>Restore your history from a file</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.importButton" datatype="html">
+        <source> Import </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.clearData" datatype="html">
+        <source> Clear All Data</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.clearDataDesc" datatype="html">
+        <source> Permanently delete all workouts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.clearButton" datatype="html">
+        <source> Clear Data </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.actions" datatype="html">
+        <source>Actions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">91,92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.demoData" datatype="html">
+        <source>Load Demo Data</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.demoDataDesc" datatype="html">
+        <source>Overwrite with sample data</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">97,98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.loadDemoButton" datatype="html">
+        <source> Load Demo </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">103,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.close" datatype="html">
+        <source> Close </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.html</context>
+          <context context-type="linenumber">116,117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.deleteConfirm" datatype="html">
+        <source>Are you sure you want to delete all data? This action cannot be undone.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.importConfirm" datatype="html">
+        <source>Importing data will OVERWRITE your current history. Continue?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.importFailed" datatype="html">
+        <source>Import failed:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.demoConfirm" datatype="html">
+        <source>This will OVERWRITE your current data with sample data. Continue?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/settings/settings-modal/settings-modal.ts</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="workout.title.edit" datatype="html">

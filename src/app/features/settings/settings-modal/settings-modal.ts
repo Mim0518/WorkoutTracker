@@ -20,7 +20,7 @@ export class SettingsModalComponent {
     }
 
     confirmClear() {
-        if (confirm('Are you sure you want to delete all data? This action cannot be undone.')) {
+        if (confirm($localize`:@@settings.deleteConfirm:Are you sure you want to delete all data? This action cannot be undone.`)) {
             this.workoutService.clearDatabase();
         }
     }
@@ -36,9 +36,11 @@ export class SettingsModalComponent {
     onFileSelected(event: any) {
         const file = event.target.files[0];
         if (file) {
-            if (confirm('Importing data will OVERWRITE your current history. Continue?')) {
+            if (confirm($localize`:@@settings.importConfirm:Importing data will OVERWRITE your current history. Continue?`)) {
                 this.workoutService.importData(file).catch(err => {
-                    alert('Import failed: ' + err.message);
+                    // We can also localize dynamic errors if needed, but the error message from the service might be technical.
+                    // For now, let's localize the prefix.
+                    alert($localize`:@@settings.importFailed:Import failed:` + ' ' + err.message);
                 });
             }
             // Reset input so same file can be selected again if needed
@@ -47,7 +49,7 @@ export class SettingsModalComponent {
     }
 
     loadDemoData() {
-        if (confirm('This will OVERWRITE your current data with sample data. Continue?')) {
+        if (confirm($localize`:@@settings.demoConfirm:This will OVERWRITE your current data with sample data. Continue?`)) {
             this.workoutService.generateDemoData();
         }
     }
