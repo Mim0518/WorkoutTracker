@@ -1,6 +1,8 @@
+
 import { Injectable, signal, computed } from '@angular/core';
 import { Workout } from '../models/workout.model';
 import { db } from '../db/workout-db';
+import { MockDataGenerator } from '../utils/mock-data.generator';
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +14,20 @@ export class WorkoutService {
 
     constructor() {
         this.loadWorkouts();
+    }
+
+    async generateDemoData() {
+        try {
+            const mockWorkouts = MockDataGenerator.generate(30); // 30 workouts ~ 3 months
+
+            await db.transaction('rw', db.workouts, async () => {
+                await db.workouts.clear();
+                await db.workouts.bulkAdd(mockWorkouts);
+            });
+            window.location.reload();
+        } catch (error) {
+            console.error('Failed to generate demo data', error);
+        }
     }
 
     private async loadWorkouts() {

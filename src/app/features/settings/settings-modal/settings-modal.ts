@@ -45,4 +45,10 @@ export class SettingsModalComponent {
             event.target.value = '';
         }
     }
+
+    loadDemoData() {
+        if (confirm('This will OVERWRITE your current data with sample data. Continue?')) {
+            this.workoutService.generateDemoData();
+        }
+    }
 }

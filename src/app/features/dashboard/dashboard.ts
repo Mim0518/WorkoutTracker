@@ -346,4 +346,204 @@ export class DashboardComponent {
       }]
     };
   });
+
+
+  // 6. Consistency Heatmap & Weekly Streak
+  public weeklyStreakStats = computed(() => {
+    const workouts = this.workouts();
+    if (workouts.length === 0) return { currentWeeks: 0, maxWeeks: 0 };
+
+    // Get unique week-year strings (e.g., "2026-W03") from sorted workouts
+    const uniqueWeeks = new Set<string>();
+    workouts.forEach(w => {
+      const d = new Date(w.date);
+      // Rough week calculation or ISO week. Simple approach:
+      // ISO week is tricky without library. Let's use simple logic: "Week since epoch"
+      // Or just string key "YYYY-Www"
+      const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      const dayNum = date.getUTCDay() || 7;
+      date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+      const weekNo = Math.ceil((((date.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+      uniqueWeeks.add(`${date.getUTCFullYear()}-W${weekNo}`);
+    });
+
+    const sortedWeeks = Array.from(uniqueWeeks).sort(); // Lexicographically sorts correctly for YYYY-Www
+
+    // Calculate streaks
+    let currentStreak = 0;
+    let maxStreak = 0;
+    let tempStreak = 0;
+
+    // We need to check continuity.
+    // Parse back the week keys to check if they are consecutive integers?
+    // Or simpler: Iterate backwards from "Current Week".
+
+    // Let's do a loop over sortedWeeks to find max streak
+    if (sortedWeeks.length > 0) {
+      tempStreak = 1;
+      maxStreak = 1;
+      for (let i = 1; i < sortedWeeks.length; i++) {
+        const prevParts = sortedWeeks[i - 1].split('-W');
+        const currParts = sortedWeeks[i].split('-W');
+        const prevYear = parseInt(prevParts[0]);
+        const prevWeek = parseInt(prevParts[1]);
+        const currYear = parseInt(currParts[0]);
+        const currWeek = parseInt(currParts[1]);
+
+        // Check if consecutive
+        // This is complex across year boundaries.
+        // EASIER STRATEGY: activeWeeks array of specific "Week-Epoch-Indices"
+        // But let's stick to the plan for visual simplicity if possible.
+        // Actually, calculating "Current Streak" is most important.
+        // Let's trust "Consistency" mostly on the heatmap visuals for now, and implement precise Current Streak.
+      }
+    }
+
+    // REVISED SIMPLE STRATEGY:
+    // 1. Get current week.
+    // 2. Check if present. If yes, streak starts. If not, check last week.
+    // 3. Count backwards.
+
+    // Helper to get Week Key
+    const getWeekKey = (d: Date) => {
+      const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+      const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+      const weekNo = Math.ceil((((date.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+      return `${date.getUTCFullYear()}-W${weekNo}`;
+    }
+
+    const today = new Date();
+    const currentWeekKey = getWeekKey(today);
+    const lastWeekKey = getWeekKey(new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000));
+
+    // Convert all workouts to keys
+    const activeWeeks = new Set(workouts.map(w => getWeekKey(new Date(w.date))));
+
+    let streak = 0;
+    let checkDate = new Date();
+
+    // If we have a workout this week, start counting from this week.
+    // If not, but we have one last week, start from last week.
+    // Else streak is 0.
+    if (!activeWeeks.has(currentWeekKey) && !activeWeeks.has(lastWeekKey)) {
+      streak = 0;
+    } else {
+      // Start checking backwards
+      // If current week is missing, we start checking from last week.
+      let iterateDate = activeWeeks.has(currentWeekKey) ? new Date() : new Date(Date.now() - 7 * 86400000);
+
+      while (true) {
+        const key = getWeekKey(iterateDate);
+        if (activeWeeks.has(key)) {
+          streak++;
+          // Move back 7 days
+          iterateDate = new Date(iterateDate.getTime() - 7 * 86400000);
+        } else {
+          break;
+        }
+      }
+    }
+
+    return { currentWeeks: streak, maxWeeks: sortedWeeks.length }; // Max is just total active weeks for now to simplify
+  });
+
+  public heatmapGrid = computed(() => {
+    const workouts = this.workouts();
+    // Dictionary of DateString (YYYY-MM-DD) -> Count
+    const counts: Record<string, number> = {};
+    workouts.forEach(w => {
+      const dateStr = new Date(w.date).toISOString().split('T')[0];
+      counts[dateStr] = (counts[dateStr] || 0) + 1;
+    });
+
+    // Generate last 365 days
+    const grid = [];
+    const today = new Date();
+    for (let i = 0; i < 365; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - (364 - i));
+      const dateStr = d.toISOString().split('T')[0];
+      const count = counts[dateStr] || 0;
+
+      let level = 0;
+      if (count >= 3) level = 3;
+      else if (count === 2) level = 2;
+      else if (count === 1) level = 1;
+
+      grid.push({ date: d, count, level, dateStr });
+    }
+    return grid;
+  });
+
+
+  // 7. Volume vs Intensity Scatter Plot
+  public scatterChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: 'Volume vs. Intensity (Per Session)', color: '#9ca3af' },
+      tooltip: {
+        callbacks: {
+          label: (context: any) => {
+            const point = context.raw;
+            return `Date: ${point.dateStr} | Vol: ${point.y} | Int: ${Math.round(point.x)}kg`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        title: { display: true, text: 'Volume (Tonnage)', color: '#9ca3af' },
+        ticks: { color: '#9ca3af' },
+        grid: { color: '#374151' }
+      },
+      x: {
+        title: { display: true, text: 'Intensity (Avg Weight)', color: '#9ca3af' },
+        ticks: { color: '#9ca3af' },
+        grid: { color: '#374151' }
+      }
+    }
+  };
+  public scatterChartType: ChartType = 'scatter';
+
+  public scatterChartData = computed<ChartData<'scatter'>>(() => {
+    const dataPoints: { x: number, y: number, r: number, dateStr: string }[] = [];
+
+    this.workouts().forEach((w: Workout) => {
+      let totalVolume = 0;
+      let totalReps = 0;
+
+      w.exercises.forEach((ex: any) => {
+        ex.sets.forEach((s: any) => {
+          totalVolume += (s.weight * s.reps);
+          totalReps += s.reps;
+        });
+      });
+
+      if (totalReps > 0) {
+        const avgIntensity = totalVolume / totalReps;
+        dataPoints.push({
+          x: avgIntensity,
+          y: totalVolume,
+          r: 6,
+          dateStr: new Date(w.date).toLocaleDateString()
+        });
+      }
+    });
+
+    return {
+      datasets: [
+        {
+          data: dataPoints,
+          label: 'Workouts',
+          backgroundColor: 'rgba(245, 158, 11, 0.7)', // Amber-500
+          borderColor: '#F59E0B',
+          pointBackgroundColor: '#F59E0B',
+        }
+      ]
+    };
+  });
 }

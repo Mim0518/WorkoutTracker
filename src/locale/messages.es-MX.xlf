@@ -26,6 +26,14 @@
         <source>Volume Moved</source>
         <target>Volumen Total</target>
       </trans-unit>
+      <trans-unit id="dashboard.unitTonnes" datatype="html">
+        <source>Tonnes</source>
+        <target>Toneladas</target>
+      </trans-unit>
+      <trans-unit id="dashboard.unitKg" datatype="html">
+        <source>kg</source>
+        <target>kg</target>
+      </trans-unit>
       <trans-unit id="dashboard.strengthProgression" datatype="html">
         <source>Strength Progression</source>
         <target>Progreso de Fuerza</target>
@@ -196,6 +204,22 @@
         <source>Restore your history from a file</source>
         <target>Restaurar historial desde archivo</target>
       </trans-unit>
+      <trans-unit id="settings.actions" datatype="html">
+        <source>Actions</source>
+        <target>Acciones</target>
+      </trans-unit>
+      <trans-unit id="settings.demoData" datatype="html">
+        <source>Load Demo Data</source>
+        <target>Cargar Datos Demo</target>
+      </trans-unit>
+      <trans-unit id="settings.demoDataDesc" datatype="html">
+        <source>Overwrite with sample data</source>
+        <target>Sobrescribir con datos de ejemplo</target>
+      </trans-unit>
+      <trans-unit id="settings.loadDemoButton" datatype="html">
+        <source>Load Demo</source>
+        <target>Cargar Demo</target>
+      </trans-unit>
       <trans-unit id="settings.clearData" datatype="html">
         <source>Clear All Data</source>
         <target>Borrar Todo</target>
@@ -211,6 +235,34 @@
       <trans-unit id="settings.close" datatype="html">
         <source>Close</source>
         <target>Cerrar</target>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.title" datatype="html">
+        <source>Consistency</source>
+        <target>Consistencia</target>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.lastYear" datatype="html">
+        <source>Last 365 Days</source>
+        <target>Últimos 365 Días</target>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.streakLabel" datatype="html">
+        <source>Weekly Streak:</source>
+        <target>Racha Semanal:</target>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.weeks" datatype="html">
+        <source>Weeks</source>
+        <target>Semanas</target>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.legend.rest" datatype="html">
+        <source>Rest</source>
+        <target>Descanso</target>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.legend.max" datatype="html">
+        <source>Max</source>
+        <target>Máx</target>
+      </trans-unit>
+      <trans-unit id="dashboard.consistency.tip" datatype="html">
+        <source>&quot;Consistency &gt; Intensity. Rest days fuel growth.&quot;</source>
+        <target>&quot;Consistencia &gt; Intensidad. El descanso alimenta el crecimiento.&quot;</target>
       </trans-unit>
     </body>
   </file>

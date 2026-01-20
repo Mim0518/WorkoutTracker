@@ -90,8 +90,16 @@
             <div class="flex items-start justify-between">
                 <div>
                     <p i18n="@@dashboard.totalVolume" class="text-gray-400 text-sm font-medium mb-1">Volume Moved</p>
-                    <h3 class="text-3xl font-bold text-white tracking-tight">{{ totalVolume() | number }} <span
-                            class="text-sm text-gray-500 font-normal">kg</span></h3>
+                    <h3 class="text-3xl font-bold text-white tracking-tight">
+                        <ng-container *ngIf="totalVolume() > 10000">
+                            {{ totalVolume() / 1000 | number:'1.1-1' }} <span class="text-sm text-gray-500 font-normal"
+                                i18n="@@dashboard.unitTonnes">Tonnes</span>
+                        </ng-container>
+                        <ng-container *ngIf="totalVolume() <= 10000">
+                            {{ totalVolume() | number }} <span class="text-sm text-gray-500 font-normal"
+                                i18n="@@dashboard.unitKg">kg</span>
+                        </ng-container>
+                    </h3>
                 </div>
                 <!-- Layers/Stack Icon for Volume (Accumulation) -->
                 <div class="bg-orange-500/10 p-3 rounded-lg text-orange-500">
@@ -110,7 +118,65 @@
     <!-- col-span-full added defensively: if this somehow ends up in a grid, it will span all columns. -->
     <div class="space-y-6 mt-6 col-span-full">
 
-        <!-- Activity Chart -->
+        <!-- Consistency Heatmap -->
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg mt-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                    <h3 i18n="@@dashboard.consistency.title" class="text-xl font-bold text-white mb-1">Consistency</h3>
+                    <p class="text-sm text-gray-400"><span i18n="@@dashboard.consistency.lastYear">Last 365 Days</span>
+                        <span class="mx-2">•</span> <span i18n="@@dashboard.consistency.streakLabel">Weekly
+                            Streak:</span> <span class="text-emerald-400 font-bold">{{ weeklyStreakStats().currentWeeks
+                            }} <span i18n="@@dashboard.consistency.weeks">Weeks</span></span>
+                    </p>
+                </div>
+                <!-- Legend -->
+                <div class="flex items-center space-x-2 text-xs text-gray-400 mt-4 md:mt-0">
+                    <span i18n="@@dashboard.consistency.legend.rest">Rest</span>
+                    <div class="w-3 h-3 bg-gray-800 border border-gray-700 rounded-sm"></div>
+                    <div class="w-3 h-3 bg-emerald-900 rounded-sm"></div>
+                    <div class="w-3 h-3 bg-emerald-700 rounded-sm"></div>
+                    <div class="w-3 h-3 bg-emerald-500 rounded-sm"></div>
+                    <span i18n="@@dashboard.consistency.legend.max">Max</span>
+                </div>
+            </div>
+
+            <!-- GitHub Style Grid -->
+            <!-- We need a flexible container that wraps. 
+                 Or actually, specifically 7 rows (days) x 52 columns (weeks).
+                 Flex-row-wrap is easiest but mapping order (Rows=Days vs Columns=Days) matters.
+                 Github is Columns=Weeks, Rows=Days.
+                 Our data is flat array of 365 days.
+                 
+                 Let's use CSS Grid with dense packing or just flex wrap.
+                 Actually, simple flex wrap of small squares works well for "Linear" calendar view.
+                 GitHub style (Columns = Weeks) is harder to render with flat loop without grouping by week.
+                 Let's do a "Linear Stream" of blocks for now, it's responsive and mobile friendly.
+            -->
+            <div class="flex flex-wrap gap-1">
+                <div *ngFor="let day of heatmapGrid()"
+                    class="w-3 h-3 md:w-3.5 md:h-3.5 rounded-sm transition-colors duration-200 relative group"
+                    [ngClass]="{
+                    'bg-gray-700/50': day.level === 0,
+                    'bg-emerald-900': day.level === 1,
+                    'bg-emerald-700': day.level === 2,
+                    'bg-emerald-500': day.level === 3
+                }">
+                    <!-- Tooltip -->
+                    <div
+                        class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-10 pointer-events-none border border-gray-700 shadow-xl transition-opacity">
+                        <span class="font-bold">{{ day.date | date:'MMM d' }}:</span>
+                        {{ day.count > 0 ? day.count + ' workout' + (day.count > 1 ? 's' : '') : 'Rest Day' }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <p i18n="@@dashboard.consistency.tip" class="text-xs text-blue-300 italic">"Consistency > Intensity.
+                    Rest days fuel growth."</p>
+            </div>
+        </div>
+
+        <!-- Charts Stack -->
         <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg" style="height: 350px;">
             <div class="relative w-full h-full">
                 <canvas baseChart [data]="barChartData()" [options]="barChartOptions" [type]="barChartType">
@@ -175,6 +241,14 @@
         <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg col-span-full" style="height: 500px;">
             <div class="relative w-full h-full flex justify-center">
                 <canvas baseChart [data]="radarChartData()" [options]="radarChartOptions" [type]="radarChartType">
+                </canvas>
+            </div>
+        </div>
+
+        <!-- Volume vs Intensity (Scatter) -->
+        <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg col-span-full" style="height: 400px;">
+            <div class="relative w-full h-full">
+                <canvas baseChart [data]="scatterChartData()" [options]="scatterChartOptions" [type]="scatterChartType">
                 </canvas>
             </div>
         </div>
