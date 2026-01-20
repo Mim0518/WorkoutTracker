@@ -1,70 +1,56 @@
 # WorkoutTracker
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+Privacy-focused, offline-first workout tracking application built with Angular.
 
-## Development server
+## Overview
 
-To start a local development server, run:
+WorkoutTracker is a modern web application designed to help users track their strength training progress without the need for an active internet connection or account creation. All data is stored locally on your device, ensuring complete privacy and ownership of your workout logs.
 
-```bash
-ng serve
-```
+## Key Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Workout Logging**: Easily record exercises, sets, reps, and weights.
+- **Analytics Dashboard**: Visualize your progress with charts for volume, consistency, and intensity.
+- **Offline First**: Works completely offline using local storage (IndexedDB).
+- **Data Management**: Export your data to JSON for backup or import it to restore.
+- **Localization**: Fully localized for English (en-US) and Spanish (es-MX).
+- **Dark Mode**: Sleek dark theme optimized for gym environments.
 
-## Code scaffolding
+## Tech Stack
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Framework**: [Angular](https://angular.dev/) (v19+)
+- **Styling**: [TailwindCSS](https://tailwindcss.com/)
+- **Database**: [Dexie.js](https://dexie.org/) (Wrapper for IndexedDB)
+- **Charts**: [Chart.js](https://www.chartjs.org/) / [Ng2-Charts](https://valor-software.com/ng2-charts/)
 
-```bash
-ng generate component component-name
-```
+## Quick Start
+### Prerequisites
+- Node.js (v18 or higher)
+- npm
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Installation
 
-```bash
-ng generate --help
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Mim0518/WorkoutTracker.git
+   ```
 
-## Building
+2. Install dependencies:
+   ```bash
+   cd WorkoutTracker
+   npm install
+   ```
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+3. Start the development server:
+   ```bash
+   ng serve
+   ```
+   Navigate to `http://localhost:4200/`.
 
 ## Localization (i18n)
 
 This application is localized for **English (en-US)** and **Spanish (es-MX)**.
 
-### Development
-To run the application in a specific language locally:
-
+### Running Locally
 ```bash
 # Run in English (default)
 ng serve
@@ -74,38 +60,16 @@ ng serve --configuration=es-MX
 ```
 
 ### Building
-To build the application:
-
 ```bash
-# Builds configured locales
+# Build for Spanish
 ng build --configuration=es-MX
+
+# Build for Production (all locales if configured)
+ng build
 ```
-*Note: To build all locales at once, you may need to configure a target that localizes both, or run build for each configuration.*
 
-The output will be in `dist/WorkoutTracker/` (depending on build config).
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to submit pull requests and report issues.
 
-### Deployment / Serving
-Since the build produces separate directories for each language (e.g., `en-US` and `es-MX`), you need to configure your web server to serve the correct `index.html` based on the URL or Accept-Language header.
-
-#### Nginx Configuration Example
-Serve `en-US` at `/` and `es-MX` at `/es/`:
-
-```nginx
-server {
-    listen 80;
-    server_name example.com;
-    root /var/www/WorkoutTracker;
-
-    # Default to English
-    location / {
-        alias /var/www/WorkoutTracker/en-US/;
-        try_files $uri $uri/ /en-US/index.html;
-    }
-
-    # Spanish
-    location /es/ {
-        alias /var/www/WorkoutTracker/es-MX/;
-        try_files $uri $uri/ /es-MX/index.html;
-    }
-}
-```
+## License
+MIT

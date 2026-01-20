@@ -280,6 +280,38 @@
         <source>This will OVERWRITE your current data with sample data. Continue?</source>
         <target>Esto SOBRESCRIBIRÁ tus datos actuales con datos de ejemplo. ¿Continuar?</target>
       </trans-unit>
+      <trans-unit id="settings.actions" datatype="html">
+        <source>Actions</source>
+        <target>Acciones</target>
+      </trans-unit>
+      <trans-unit id="settings.demoData" datatype="html">
+        <source>Load Demo Data</source>
+        <target>Cargar Datos Demo</target>
+      </trans-unit>
+      <trans-unit id="settings.demoDataDesc" datatype="html">
+        <source>Overwrite with sample data</source>
+        <target>Sobrescribir con datos de ejemplo</target>
+      </trans-unit>
+      <trans-unit id="settings.loadDemoButton" datatype="html">
+        <source>Load Demo</source>
+        <target>Cargar Demo</target>
+      </trans-unit>
+      <trans-unit id="settings.deleteConfirm" datatype="html">
+        <source>Are you sure you want to delete all data? This action cannot be undone.</source>
+        <target>¿Estás seguro de que quieres borrar todo? Esta acción no se puede deshacer.</target>
+      </trans-unit>
+      <trans-unit id="settings.importConfirm" datatype="html">
+        <source>Importing data will OVERWRITE your current history. Continue?</source>
+        <target>Importar datos SOBRESCRIBIRÁ tu historial actual. ¿Continuar?</target>
+      </trans-unit>
+      <trans-unit id="settings.importFailed" datatype="html">
+        <source>Import failed:</source>
+        <target>Error de importación:</target>
+      </trans-unit>
+      <trans-unit id="settings.demoConfirm" datatype="html">
+        <source>This will OVERWRITE your current data with sample data. Continue?</source>
+        <target>Esto SOBRESCRIBIRÁ tus datos actuales con datos de ejemplo. ¿Continuar?</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
