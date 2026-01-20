@@ -60,6 +60,67 @@ export class WorkoutService {
         }
     }
 
+    async exportData() {
+        try {
+            const workouts = await db.workouts.toArray();
+            const dataStr = JSON.stringify(workouts, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            const date = new Date().toISOString().split('T')[0];
+            a.download = `workout-tracker-backup-${date}.json`;
+            a.click();
+
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Failed to export data', error);
+        }
+    }
+
+    async importData(file: File): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const json = e.target?.result as string;
+                    const data = JSON.parse(json);
+
+                    if (!Array.isArray(data)) {
+                        throw new Error('Invalid data format: Expected an array');
+                    }
+
+                    // Simple schema check on first item if exists
+                    if (data.length > 0 && (!data[0].id || !data[0].date)) {
+                        throw new Error('Invalid data format: Missing required fields');
+                    }
+
+                    // Restore Dates
+                    const parsedData = data.map((w: any) => ({
+                        ...w,
+                        date: new Date(w.date)
+                    }));
+
+                    // Transaction: Clear and Add
+                    await db.transaction('rw', db.workouts, async () => {
+                        await db.workouts.clear();
+                        await db.workouts.bulkAdd(parsedData);
+                    });
+
+                    window.location.reload();
+                    resolve();
+
+                } catch (error) {
+                    console.error('Failed to import data', error);
+                    reject(error);
+                }
+            };
+            reader.onerror = (e) => reject(e);
+            reader.readAsText(file);
+        });
+    }
+
     getWorkout(id: string) {
         return computed(() => this.workoutsSignal().find(w => w.id === id));
     }

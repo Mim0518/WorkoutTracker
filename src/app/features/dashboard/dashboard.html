@@ -170,6 +170,15 @@
             </div>
         </div>
 
+        <!-- Strength Symmetry (Radar) -->
+        <!-- col-span-full added defensively -->
+        <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg col-span-full" style="height: 500px;">
+            <div class="relative w-full h-full flex justify-center">
+                <canvas baseChart [data]="radarChartData()" [options]="radarChartOptions" [type]="radarChartType">
+                </canvas>
+            </div>
+        </div>
+
     </div>
 
     <!-- Settings Modal -->

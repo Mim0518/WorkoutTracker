@@ -295,4 +295,55 @@ export class DashboardComponent {
       ]
     };
   });
+
+  // 5. Strength Symmetry (Radar Chart)
+  public radarChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: 'Strength Symmetry (Total Sets)', color: '#9ca3af' }
+    },
+    scales: {
+      r: {
+        grid: { color: '#374151' },
+        angleLines: { color: '#374151' },
+        pointLabels: { color: '#9ca3af' },
+        ticks: { backdropColor: 'transparent', color: '#9ca3af', display: false } // Hide numeric ticks for cleaner look
+      }
+    }
+  };
+  public radarChartType: ChartType = 'radar';
+
+  public radarChartData = computed<ChartData<'radar'>>(() => {
+    // 1. Initialize counts for the 6 axes
+    const counts: Record<string, number> = {
+      'Chest': 0, 'Back': 0, 'Legs': 0, 'Shoulders': 0, 'Arms': 0, 'Core': 0
+    };
+
+    // 2. Aggregate data
+    this.workouts().forEach((w: Workout) => {
+      w.exercises.forEach((ex: any) => {
+        const meta = EXERCISE_METADATA[ex.name];
+        if (meta && meta.muscle in counts) {
+          counts[meta.muscle] += ex.sets.length;
+        }
+      });
+    });
+
+    // 3. Map to dataset
+    return {
+      labels: Object.keys(counts),
+      datasets: [{
+        data: Object.values(counts),
+        label: 'Total Sets',
+        backgroundColor: 'rgba(99, 102, 241, 0.2)', // Indigo
+        borderColor: '#6366F1',
+        pointBackgroundColor: '#6366F1',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: '#6366F1'
+      }]
+    };
+  });
 }

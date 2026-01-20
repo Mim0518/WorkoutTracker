@@ -172,9 +172,25 @@
         <source>Data Management</source>
         <target>Gestión de Datos</target>
       </trans-unit>
+      <trans-unit id="settings.export" datatype="html">
+        <source>Export Data</source>
+        <target>Exportar Datos</target>
+      </trans-unit>
+      <trans-unit id="settings.exportDesc" datatype="html">
+        <source>Download a backup of your history</source>
+        <target>Descargar respaldo de historial</target>
+      </trans-unit>
+      <trans-unit id="settings.exportButton" datatype="html">
+        <source>Export</source>
+        <target>Exportar</target>
+      </trans-unit>
       <trans-unit id="settings.import" datatype="html">
         <source>Import Data</source>
         <target>Importar Datos</target>
+      </trans-unit>
+      <trans-unit id="settings.importButton" datatype="html">
+        <source>Import</source>
+        <target>Importar</target>
       </trans-unit>
       <trans-unit id="settings.importDesc" datatype="html">
         <source>Restore your history from a file</source>

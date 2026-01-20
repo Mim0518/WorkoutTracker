@@ -34,7 +34,22 @@
                                     i18n="@@settings.dataManagement">Data Management</h4>
 
                                 <div class="space-y-3">
-                                    <!-- Import Data (Placeholder) -->
+                                    <!-- Export Data -->
+                                    <div class="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
+                                        <div>
+                                            <p class="text-sm font-medium text-white" i18n="@@settings.export">Export
+                                                Data</p>
+                                            <p class="text-xs text-gray-500" i18n="@@settings.exportDesc">Download a
+                                                backup of your history</p>
+                                        </div>
+                                        <button (click)="exportData()"
+                                            class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded transition-colors"
+                                            i18n="@@settings.exportButton">
+                                            Export
+                                        </button>
+                                    </div>
+
+                                    <!-- Import Data -->
                                     <div class="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
                                         <div>
                                             <p class="text-sm font-medium text-white" i18n="@@settings.import">Import
@@ -42,9 +57,12 @@
                                             <p class="text-xs text-gray-500" i18n="@@settings.importDesc">Restore your
                                                 history from a file</p>
                                         </div>
-                                        <button disabled
-                                            class="px-3 py-1 bg-gray-700 text-gray-400 text-xs rounded cursor-not-allowed border border-gray-600">
-                                            Coming Soon
+                                        <input type="file" #fileInput hidden (change)="onFileSelected($event)"
+                                            accept=".json">
+                                        <button (click)="triggerImport()"
+                                            class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded transition-colors"
+                                            i18n="@@settings.importButton">
+                                            Import
                                         </button>
                                     </div>
 
