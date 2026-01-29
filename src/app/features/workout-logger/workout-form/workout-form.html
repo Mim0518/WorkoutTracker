@@ -15,19 +15,26 @@
 
     <form [formGroup]="workoutForm" (ngSubmit)="onSubmit()" class="space-y-8">
         <!-- Main Info -->
-        <div class="bg-gray-800 p-4 sm:p-6 rounded-xl border border-gray-700 shadow-xl">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Name Input -->
                 <div>
                     <label i18n="@@workout.nameLabel" class="block text-sm font-medium text-gray-400 mb-2">Workout
                         Name</label>
                     <input type="text" formControlName="name"
-                        class="block w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                        class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
                         placeholder="e.g. Legs Day" i18n-placeholder="@@workout.namePlaceholder">
                 </div>
+                <!-- Date Input (Wrapper Pattern) -->
                 <div>
                     <label i18n="@@workout.dateLabel" class="block text-sm font-medium text-gray-400 mb-2">Date</label>
-                    <input type="date" formControlName="date"
-                        class="block w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors min-w-0">
+                    <!-- Wrapper provides the visual box -->
+                    <div
+                        class="relative w-full bg-gray-900 border border-gray-700 rounded-lg focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-colors overflow-hidden">
+                        <!-- Input fills the wrapper, reset background to dark, force dark scheme for picker -->
+                        <input type="date" formControlName="date" style="color-scheme: dark;"
+                            class="block w-full h-full bg-gray-900 border-none text-white px-4 py-3 focus:ring-0 focus:outline-none uppercase sm:normal-case placeholder-transparent appearance-none min-w-0">
+                    </div>
                 </div>
             </div>
         </div>

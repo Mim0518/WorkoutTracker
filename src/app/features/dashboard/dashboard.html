@@ -186,13 +186,13 @@
 
         <!-- Strength Progression -->
         <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg" style="height: 400px;">
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                 <h3 i18n="@@dashboard.strengthProgression" class="text-gray-300 font-semibold">Strength Progression</h3>
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-2 w-full sm:w-auto">
                     <label i18n="@@dashboard.exerciseLabel"
-                        class="text-xs text-gray-500 uppercase font-bold">Exercise:</label>
+                        class="text-xs text-gray-500 uppercase font-bold whitespace-nowrap">Exercise:</label>
                     <select [ngModel]="selectedExercise()" (ngModelChange)="selectedExercise.set($event)"
-                        class="bg-gray-900 border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5">
+                        class="bg-gray-900 border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 flex-1 sm:flex-none min-w-0">
                         <option *ngFor="let ex of availableExercises()" [value]="ex">{{ ex }}</option>
                     </select>
                 </div>
