@@ -140,4 +140,34 @@ export class WorkoutService {
     getWorkout(id: string) {
         return computed(() => this.workoutsSignal().find(w => w.id === id));
     }
+    async getExerciseStats(exerciseName: string, excludeWorkoutId?: string): Promise<{ max: number; max10: number; historyCount: number }> {
+        const lowerName = exerciseName.toLowerCase().trim();
+        if (!lowerName) return { max: 0, max10: 0, historyCount: 0 };
+
+        let workouts = await db.workouts.toArray();
+
+        if (excludeWorkoutId) {
+            workouts = workouts.filter(w => w.id !== excludeWorkoutId);
+        }
+
+        let max = 0;
+        let max10 = 0;
+        let count = 0;
+
+        workouts.forEach(w => {
+            // Find exercises matching the name (case-insensitive)
+            const matches = w.exercises.filter(e => e.name.toLowerCase().trim() === lowerName);
+            if (matches.length > 0) {
+                count++;
+                matches.forEach(ex => {
+                    ex.sets.forEach(s => {
+                        if (s.weight > max) max = s.weight;
+                        if (s.reps >= 10 && s.weight > max10) max10 = s.weight;
+                    });
+                });
+            }
+        });
+
+        return { max, max10, historyCount: count };
+    }
 }

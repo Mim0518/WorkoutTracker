@@ -312,6 +312,18 @@
         <source>This will OVERWRITE your current data with sample data. Continue?</source>
         <target>Esto SOBRESCRIBIRÁ tus datos actuales con datos de ejemplo. ¿Continuar?</target>
       </trans-unit>
+      <trans-unit id="workout.badge.new" datatype="html">
+        <source>NEW!</source>
+        <target>¡NUEVO!</target>
+      </trans-unit>
+      <trans-unit id="workout.badge.max" datatype="html">
+        <source>Max:</source>
+        <target>Máx:</target>
+      </trans-unit>
+      <trans-unit id="workout.badge.10rm" datatype="html">
+        <source>10RM:</source>
+        <target>10RM:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

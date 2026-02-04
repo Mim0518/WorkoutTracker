@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, OnInit, ElementRef, HostListener, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
@@ -6,6 +6,14 @@ import { WorkoutService } from '../../../services/workout.service';
 import { Workout } from '../../../models/workout.model';
 import { EXERCISE_LIST } from '../../../models/exercise-list.data';
 import { v4 as uuidv4 } from 'uuid';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
+interface ExerciseStats {
+  max: number;
+  max10: number;
+  historyCount: number;
+  loading: boolean;
+}
 
 @Component({
   selector: 'app-workout-form',
@@ -20,7 +28,6 @@ export class WorkoutFormComponent implements OnInit {
   private workoutService = inject(WorkoutService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private eRef = inject(ElementRef);
 
   workoutForm: FormGroup;
   isEditMode = false;
@@ -29,6 +36,13 @@ export class WorkoutFormComponent implements OnInit {
   // Autocomplete state
   activeDropdownIndex: number | null = null;
   filteredExercises: string[] = [];
+
+  // Stats State
+  // Map index -> Stats. Since FormArray indexes change on remove, we need to be careful.
+  // Actually, simplest is to just keep a list that we sync with FormArray?
+  // Or better: Use a Map keyed by the FormGroup instance or just rely on index if we assume sync.
+  // Let's use an array of signals matched by index.
+  exerciseStats = signal<ExerciseStats[]>([]);
 
   constructor() {
     this.workoutForm = this.fb.group({
@@ -77,6 +91,21 @@ export class WorkoutFormComponent implements OnInit {
       sets: this.fb.array([])
     });
 
+    // Add stats placeholder
+    this.updateStats(this.exercises.length, name);
+
+    // Listen for name changes to update stats
+    exerciseGroup.get('name')?.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(val => {
+      // Use current index in FormArray.
+      const index = this.exercises.controls.indexOf(exerciseGroup);
+      if (index !== -1) {
+        this.updateStats(index, val || '');
+      }
+    });
+
     if (sets.length > 0) {
       sets.forEach(s => {
         (exerciseGroup.get('sets') as FormArray).push(this.createSet(s.reps, s.weight));
@@ -95,13 +124,46 @@ export class WorkoutFormComponent implements OnInit {
     });
   }
 
+  async updateStats(index: number, name: string) {
+    // Ensure array is big enough
+    const currentStats = this.exerciseStats();
+    if (index >= currentStats.length) {
+      // Fill gap
+      const newStats = [...currentStats];
+      while (newStats.length <= index) {
+        newStats.push({ max: 0, max10: 0, historyCount: 0, loading: false });
+      }
+      this.exerciseStats.set(newStats);
+    }
+
+    if (!name) return;
+
+    // Set loading
+    const stats = [...this.exerciseStats()];
+    stats[index] = { ...stats[index], loading: true };
+    this.exerciseStats.set(stats);
+
+    const result = await this.workoutService.getExerciseStats(name, this.workoutId || undefined);
+
+    // Update result
+    const updated = [...this.exerciseStats()];
+    updated[index] = { ...result, loading: false };
+    this.exerciseStats.set(updated);
+  }
+
   addExercise() {
+    // Stats array expansion handled in createExercise implicitly pushing to form array?
+    // Actually createExercise is called BEFORE push.
+    // So 'index' passed to updateStats will be exercises.length.
     this.exercises.push(this.createExercise());
   }
 
   removeExercise(index: number) {
     this.exercises.removeAt(index);
-    // Close dropdown strictly if we removed the active one or one before it
+    const stats = [...this.exerciseStats()];
+    stats.splice(index, 1);
+    this.exerciseStats.set(stats);
+
     if (this.activeDropdownIndex === index) {
       this.closeDropdown();
     } else if (this.activeDropdownIndex !== null && this.activeDropdownIndex > index) {
@@ -123,15 +185,20 @@ export class WorkoutFormComponent implements OnInit {
       date: new Date(workout.date).toISOString().substring(0, 10)
     });
 
-    // Clear initial exercises
     while (this.exercises.length) {
       this.exercises.removeAt(0);
     }
+    // Also clear stats
+    this.exerciseStats.set([]);
 
-    workout.exercises.forEach(ex => {
+    workout.exercises.forEach((ex, i) => {
+      // createExercise calls updateStats, which is async.
+      // But we push immediately.
+      // We pass the name so it triggers the initial fetch.
       this.exercises.push(this.createExercise(ex.name, ex.sets));
     });
   }
+
 
   onSubmit() {
     if (this.workoutForm.valid) {

@@ -46,29 +46,64 @@
                 [class.z-20]="activeDropdownIndex === i" [class.z-0]="activeDropdownIndex !== i">
                 <div
                     class="bg-gray-750 p-4 border-b border-gray-700 flex justify-between items-center bg-gray-800/50 rounded-t-xl">
-                    <div class="flex items-center flex-1 mr-4">
-                        <span class="bg-blue-600/20 text-blue-400 text-xs font-bold px-2 py-1 rounded mr-3">#{{i +
+                    <div class="flex items-start flex-1 mr-4">
+                        <span class="bg-blue-600/20 text-blue-400 text-xs font-bold px-2 py-1 rounded mr-3 mt-1.5">#{{i
+                            +
                             1}}</span>
-                        <div class="relative exercise-autocomplete-container">
-                            <input type="text" formControlName="name" (focus)="openDropdown(i)"
-                                (input)="onSearchInput($event, i)"
-                                class="bg-gray-800 border-0 border-b border-transparent focus:border-blue-500 text-white font-semibold w-full focus:ring-0 px-2 py-1 placeholder-gray-500 rounded transition-colors"
-                                placeholder="Exercise Name (e.g. Bench Press)"
-                                i18n-placeholder="@@workout.exercisePlaceholder" autocomplete="off">
 
-                            <!-- Dropdown Results -->
-                            <div *ngIf="activeDropdownIndex === i"
-                                class="absolute z-50 left-0 mt-1 w-full bg-gray-800 border border-gray-700 rounded-lg shadow-xl max-h-60 overflow-y-auto">
-                                <ul class="py-1">
-                                    <li *ngFor="let ex of filteredExercises" (click)="selectExercise(i, ex)"
-                                        class="px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer transition-colors">
-                                        {{ ex }}
-                                    </li>
-                                    <li *ngIf="filteredExercises.length === 0"
-                                        class="px-4 py-2 text-sm text-gray-500 italic" i18n="@@workout.noMatches">
-                                        No matches found. Custom exercise will be added.
-                                    </li>
-                                </ul>
+                        <div class="flex-1 flex flex-col">
+                            <div class="relative exercise-autocomplete-container w-full">
+                                <input type="text" formControlName="name" (focus)="openDropdown(i)"
+                                    (input)="onSearchInput($event, i)"
+                                    class="bg-gray-800 border-0 border-b border-transparent focus:border-blue-500 text-white font-semibold w-full focus:ring-0 px-2 py-1 placeholder-gray-500 rounded transition-colors"
+                                    placeholder="Exercise Name (e.g. Bench Press)"
+                                    i18n-placeholder="@@workout.exercisePlaceholder" autocomplete="off">
+
+                                <!-- Dropdown Results -->
+                                <div *ngIf="activeDropdownIndex === i"
+                                    class="absolute z-50 left-0 mt-1 w-full bg-gray-800 border border-gray-700 rounded-lg shadow-xl max-h-60 overflow-y-auto">
+                                    <ul class="py-1">
+                                        <li *ngFor="let ex of filteredExercises" (click)="selectExercise(i, ex)"
+                                            class="px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer transition-colors">
+                                            {{ ex }}
+                                        </li>
+                                        <li *ngIf="filteredExercises.length === 0"
+                                            class="px-4 py-2 text-sm text-gray-500 italic" i18n="@@workout.noMatches">
+                                            No matches found. Custom exercise will be added.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Badges -->
+                            <div class="flex items-center space-x-2 mt-2 min-h-[22px]"
+                                *ngIf="exerciseStats()[i] as stats">
+                                <!-- Loading -->
+                                <div *ngIf="stats.loading" class="animate-pulse h-5 w-16 bg-gray-700 rounded full">
+                                </div>
+
+                                <ng-container *ngIf="!stats.loading">
+                                    <!-- New Badge -->
+                                    <span *ngIf="stats.historyCount === 0 && exercises.at(i).get('name')?.value"
+                                        class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-green-900/40 text-green-400 border border-green-700/50"
+                                        i18n="@@workout.badge.new">
+                                        NEW!
+                                    </span>
+
+                                    <!-- Max Weight Badge -->
+                                    <span *ngIf="stats.max > 0"
+                                        class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-yellow-900/40 text-yellow-400 border border-yellow-700/50 flex items-center whitespace-nowrap"
+                                        title="All-time Max Weight">
+                                        <span i18n="@@workout.badge.max">Max:</span>&nbsp;{{ stats.max }}kg
+                                    </span>
+
+                                    <!-- 10RM Badge -->
+                                    <span *ngIf="stats.max10 > 0"
+                                        class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-yellow-900/40 text-yellow-400 border border-yellow-700/50 flex items-center whitespace-nowrap"
+                                        title="Max Weight for 10+ Reps">
+                                        <span i18n="@@workout.badge.10rm">10RM:</span>&nbsp;{{ stats.max10 }}kg
+                                    </span>
+                                </ng-container>
                             </div>
                         </div>
                     </div>
