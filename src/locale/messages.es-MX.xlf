@@ -324,6 +324,10 @@
         <source>10RM:</source>
         <target>10RM:</target>
       </trans-unit>
+      <trans-unit id="app.scrollToTop" datatype="html">
+        <source>Scroll to Top</source>
+        <target>Ir arriba</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
