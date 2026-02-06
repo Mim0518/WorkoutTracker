@@ -16,6 +16,13 @@
         </button>
     </div>
 
+    <!-- Notifications -->
+    <div class="mb-6" *ngIf="notifications().length > 0">
+        <app-notification-card *ngFor="let notification of notifications(); let i = index" [notification]="notification"
+            (dismiss)="dismissNotification(i)">
+        </app-notification-card>
+    </div>
+
     <!-- Summary Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Total Workouts -->

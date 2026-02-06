@@ -170,4 +170,82 @@ export class WorkoutService {
 
         return { max, max10, historyCount: count };
     }
+
+    /**
+     * Get exercise history for predictions
+     * Returns chronological sessions (most recent first)
+     */
+    async getExerciseHistory(exerciseName: string, limit: number = 10): Promise<any[]> {
+        const lowerName = exerciseName.toLowerCase().trim();
+        if (!lowerName) return [];
+
+        const workouts = await db.workouts.orderBy('date').reverse().toArray();
+        const sessions: any[] = [];
+
+        for (const workout of workouts) {
+            const matchingExercises = workout.exercises.filter(e =>
+                e.name.toLowerCase().trim() === lowerName
+            );
+
+            if (matchingExercises.length > 0) {
+                matchingExercises.forEach(ex => {
+                    sessions.push({
+                        date: workout.date,
+                        sets: ex.sets,
+                        workoutName: workout.name
+                    });
+                });
+            }
+
+            if (sessions.length >= limit) {
+                break;
+            }
+        }
+
+        return sessions.slice(0, limit);
+    }
+
+    /**
+     * Get recent workouts within specified days
+     */
+    async getRecentWorkouts(days: number): Promise<any[]> {
+        const cutoffDate = new Date();
+        cutoffDate.setDate(cutoffDate.getDate() - days);
+
+        const workouts = await db.workouts
+            .where('date')
+            .above(cutoffDate)
+            .reverse()
+            .sortBy('date');
+
+        return workouts;
+    }
+
+    /**
+     * Analyze performance trend for an exercise
+     */
+    async getPerformanceTrend(exerciseName: string): Promise<'improving' | 'plateau' | 'declining'> {
+        const history = await this.getExerciseHistory(exerciseName, 6);
+
+        if (history.length < 3) {
+            return 'plateau'; // Not enough data
+        }
+
+        // Calculate average volume for each session
+        const volumes = history.map(session => {
+            return session.sets.reduce((sum: number, set: any) =>
+                sum + (set.weight * set.reps), 0
+            );
+        });
+
+        // Compare recent 3 vs previous 3
+        const recentAvg = volumes.slice(0, 3).reduce((a, b) => a + b, 0) / 3;
+        const previousAvg = volumes.slice(3, 6).reduce((a, b) => a + b, 0) / 3;
+
+        const change = ((recentAvg - previousAvg) / previousAvg) * 100;
+
+        if (change > 5) return 'improving';
+        if (change < -5) return 'declining';
+        return 'plateau';
+    }
 }

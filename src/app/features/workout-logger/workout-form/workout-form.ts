@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { WorkoutService } from '../../../services/workout.service';
+import { PredictionService } from '../../../services/prediction.service';
 import { Workout } from '../../../models/workout.model';
 import { EXERCISE_LIST } from '../../../models/exercise-list.data';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,6 +13,11 @@ interface ExerciseStats {
   max: number;
   max10: number;
   historyCount: number;
+  loading: boolean;
+}
+
+interface SuggestedWeight {
+  weight: number | null;
   loading: boolean;
 }
 
@@ -26,6 +32,7 @@ export class WorkoutFormComponent implements OnInit {
   exerciseList = EXERCISE_LIST;
   private fb = inject(FormBuilder);
   private workoutService = inject(WorkoutService);
+  private predictionService = inject(PredictionService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -38,11 +45,10 @@ export class WorkoutFormComponent implements OnInit {
   filteredExercises: string[] = [];
 
   // Stats State
-  // Map index -> Stats. Since FormArray indexes change on remove, we need to be careful.
-  // Actually, simplest is to just keep a list that we sync with FormArray?
-  // Or better: Use a Map keyed by the FormGroup instance or just rely on index if we assume sync.
-  // Let's use an array of signals matched by index.
   exerciseStats = signal<ExerciseStats[]>([]);
+
+  // Suggested weights state
+  suggestedWeights = signal<SuggestedWeight[]>([]);
 
   constructor() {
     this.workoutForm = this.fb.group({
@@ -93,16 +99,17 @@ export class WorkoutFormComponent implements OnInit {
 
     // Add stats placeholder
     this.updateStats(this.exercises.length, name);
+    this.fetchSuggestedWeight(this.exercises.length, name);
 
-    // Listen for name changes to update stats
+    // Listen for name changes to update stats and suggestions
     exerciseGroup.get('name')?.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged()
     ).subscribe(val => {
-      // Use current index in FormArray.
       const index = this.exercises.controls.indexOf(exerciseGroup);
       if (index !== -1) {
         this.updateStats(index, val || '');
+        this.fetchSuggestedWeight(index, val || '');
       }
     });
 
@@ -151,6 +158,48 @@ export class WorkoutFormComponent implements OnInit {
     this.exerciseStats.set(updated);
   }
 
+  async fetchSuggestedWeight(index: number, name: string) {
+    // Ensure array is big enough
+    const currentSuggestions = this.suggestedWeights();
+    if (index >= currentSuggestions.length) {
+      const newSuggestions = [...currentSuggestions];
+      while (newSuggestions.length <= index) {
+        newSuggestions.push({ weight: null, loading: false });
+      }
+      this.suggestedWeights.set(newSuggestions);
+    }
+
+    if (!name) {
+      const suggestions = [...this.suggestedWeights()];
+      suggestions[index] = { weight: null, loading: false };
+      this.suggestedWeights.set(suggestions);
+      return;
+    }
+
+    // Set loading
+    const suggestions = [...this.suggestedWeights()];
+    suggestions[index] = { ...suggestions[index], loading: true };
+    this.suggestedWeights.set(suggestions);
+
+    const suggestedWeight = await this.predictionService.getSuggestedWeight(name);
+
+    // Update result
+    const updated = [...this.suggestedWeights()];
+    updated[index] = { weight: suggestedWeight, loading: false };
+    this.suggestedWeights.set(updated);
+  }
+
+  applySuggestedWeight(exerciseIndex: number) {
+    const suggestion = this.suggestedWeights()[exerciseIndex];
+    if (suggestion && suggestion.weight !== null) {
+      const sets = this.getSets(exerciseIndex);
+      // Apply to all sets
+      sets.controls.forEach(control => {
+        control.get('weight')?.setValue(suggestion.weight);
+      });
+    }
+  }
+
   addExercise() {
     // Stats array expansion handled in createExercise implicitly pushing to form array?
     // Actually createExercise is called BEFORE push.
@@ -163,6 +212,10 @@ export class WorkoutFormComponent implements OnInit {
     const stats = [...this.exerciseStats()];
     stats.splice(index, 1);
     this.exerciseStats.set(stats);
+
+    const suggestions = [...this.suggestedWeights()];
+    suggestions.splice(index, 1);
+    this.suggestedWeights.set(suggestions);
 
     if (this.activeDropdownIndex === index) {
       this.closeDropdown();

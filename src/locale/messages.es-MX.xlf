@@ -328,6 +328,42 @@
         <source>Scroll to Top</source>
         <target>Ir arriba</target>
       </trans-unit>
+      <trans-unit id="workout.suggestion.label" datatype="html">
+        <source>Suggested:</source>
+        <target>Sugerido:</target>
+      </trans-unit>
+      <trans-unit id="workout.suggestion.apply" datatype="html">
+        <source>Apply</source>
+        <target>Aplicar</target>
+      </trans-unit>
+      <trans-unit id="prediction.notification.dismiss" datatype="html">
+        <source>Dismiss</source>
+        <target>Descartar</target>
+      </trans-unit>
+      <trans-unit id="prediction.overload.reason" datatype="html">
+        <source>You've completed 3+ sets of 10 reps for 2 consecutive sessions. Time to increase!</source>
+        <target>¡Has completado 3+ series de 10 reps en 2 sesiones consecutivas. ¡Hora de subir el peso!</target>
+      </trans-unit>
+      <trans-unit id="prediction.deload.reasonDrop" datatype="html">
+        <source>Performance has dropped across multiple exercises. Your body needs recovery.</source>
+        <target>El rendimiento ha disminuido en varios ejercicios. Tu cuerpo necesita descanso.</target>
+      </trans-unit>
+      <trans-unit id="prediction.deload.reasonConsistent" datatype="html">
+        <source>You've been training consistently for 4+ weeks. A deload will help you come back stronger.</source>
+        <target>Has entrenado consistentemente por 4+ semanas. Una descarga te ayudará a regresar más fuerte.</target>
+      </trans-unit>
+      <trans-unit id="prediction.deload.title" datatype="html">
+        <source>Consider a Deload Week</source>
+        <target>Considera una Semana de Descarga</target>
+      </trans-unit>
+      <trans-unit id="prediction.overload.title" datatype="html">
+        <source>Ready to Progress!</source>
+        <target>¡Listo para Progresar!</target>
+      </trans-unit>
+      <trans-unit id="prediction.overload.message" datatype="html">
+        <source>You've been crushing <x id="exerciseName"/> . Try <x id="weight"/> kg next time!</source>
+        <target>¡Has estado arrasando con <x id="exerciseName"/>! ¡Intenta con <x id="weight"/>kg la próxima vez!</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

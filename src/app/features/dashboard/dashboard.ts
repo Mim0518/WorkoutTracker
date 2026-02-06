@@ -1,17 +1,19 @@
-import { Component, computed, inject, signal, effect } from '@angular/core';
+import { Component, computed, inject, signal, effect, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WorkoutService } from '../../services/workout.service';
+import { PredictionService, WorkoutNotification } from '../../services/prediction.service';
 import { Workout } from '../../models/workout.model';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { EXERCISE_METADATA } from '../../models/exercise-list.data';
 import { FormsModule } from '@angular/forms';
 import { SettingsModalComponent } from '../settings/settings-modal/settings-modal';
+import { NotificationCardComponent } from './notification-card/notification-card';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective, FormsModule, SettingsModalComponent],
+  imports: [CommonModule, BaseChartDirective, FormsModule, SettingsModalComponent, NotificationCardComponent],
   templateUrl: './dashboard.html',
   styles: [`
         :host {
@@ -19,12 +21,33 @@ import { SettingsModalComponent } from '../settings/settings-modal/settings-moda
         }
     `]
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   private workoutService = inject(WorkoutService);
+  private predictionService = inject(PredictionService);
   workouts = this.workoutService.workouts;
 
   // Settings Modal State
   showSettings = signal(false);
+
+  // Notifications State
+  notifications = signal<WorkoutNotification[]>([]);
+
+  ngOnInit() {
+    this.loadNotifications();
+  }
+
+  async loadNotifications() {
+    const notifs = await this.predictionService.getReadinessNotifications();
+    this.notifications.set(notifs);
+  }
+
+  dismissNotification(index: number) {
+    // In a real app, we might want to store dismissed IDs in local storage to prevent reappearance
+    // For now, just remove from UI
+    const current = [...this.notifications()];
+    current.splice(index, 1);
+    this.notifications.set(current);
+  }
 
   openSettings() {
     this.showSettings.set(true);
