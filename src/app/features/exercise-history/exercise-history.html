@@ -1,0 +1,49 @@
+<div class="max-w-4xl mx-auto p-4 space-y-6">
+    <!-- Header -->
+    <div class="flex items-center mb-6">
+        <a routerLink="/dashboard"
+            class="mr-4 p-2 rounded-full hover:bg-gray-800 text-gray-400 hover:text-white transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+        </a>
+        <h1 class="text-3xl font-bold text-white">{{ exerciseName() }}</h1>
+    </div>
+
+    <!-- Chart Card -->
+    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-xl">
+        <h2 class="text-lg font-semibold text-gray-300 mb-4" i18n="@@history.progressTitle">1RM Progression</h2>
+        <div class="h-64">
+            <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
+        </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-xl">
+        <h2 class="text-lg font-semibold text-gray-300 mb-4" i18n="@@history.timelineTitle">PR Timeline</h2>
+
+        <div class="relative border-l-2 border-gray-700 ml-3 space-y-8">
+            <div *ngFor="let record of history()" class="relative pl-8">
+                <!-- Dot -->
+                <div
+                    class="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-blue-500 border-2 border-gray-900 shadow">
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between">
+                    <div>
+                        <div class="text-xl font-bold text-white">{{ record.value }} kg</div>
+                        <div class="text-sm text-blue-400 font-medium">{{ record.type }}</div>
+                    </div>
+                    <div class="text-sm text-gray-500 mt-1 sm:mt-0">
+                        {{ record.date | date:'mediumDate' }}
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="history().length === 0" class="pl-8 text-gray-500 italic" i18n="@@history.noData">
+                No PRs recorded yet for this exercise.
+            </div>
+        </div>
+    </div>
+</div>

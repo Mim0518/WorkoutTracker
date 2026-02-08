@@ -2,6 +2,8 @@ import { Component, computed, inject, signal, effect, OnInit } from '@angular/co
 import { CommonModule } from '@angular/common';
 import { WorkoutService } from '../../services/workout.service';
 import { PredictionService, WorkoutNotification } from '../../services/prediction.service';
+import { ReportService } from '../../services/report.service';
+import { ShareModalComponent } from './share-modal/share-modal';
 import { Workout } from '../../models/workout.model';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
@@ -9,11 +11,13 @@ import { EXERCISE_METADATA } from '../../models/exercise-list.data';
 import { FormsModule } from '@angular/forms';
 import { SettingsModalComponent } from '../settings/settings-modal/settings-modal';
 import { NotificationCardComponent } from './notification-card/notification-card';
+import { calculateTotalVolume, calculateWorkoutVolume, getUniqueExerciseNames } from '../../utils/workout.utils';
+import { toISODateKey, getWeekKey } from '../../utils/date.utils';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective, FormsModule, SettingsModalComponent, NotificationCardComponent],
+  imports: [CommonModule, BaseChartDirective, FormsModule, SettingsModalComponent, NotificationCardComponent, ShareModalComponent],
   templateUrl: './dashboard.html',
   styles: [`
         :host {
@@ -24,10 +28,15 @@ import { NotificationCardComponent } from './notification-card/notification-card
 export class DashboardComponent implements OnInit {
   private workoutService = inject(WorkoutService);
   private predictionService = inject(PredictionService);
+  private reportService = inject(ReportService);
   workouts = this.workoutService.workouts;
 
   // Settings Modal State
   showSettings = signal(false);
+
+  // Share Modal State
+  showShareModal = signal(false);
+  shareStats = signal({ workouts: 0, volume: 0, exercises: 0 });
 
   // Notifications State
   notifications = signal<WorkoutNotification[]>([]);
@@ -49,8 +58,25 @@ export class DashboardComponent implements OnInit {
     this.notifications.set(current);
   }
 
+  generateReport() {
+    this.reportService.generateWorkoutReport(this.workouts());
+  }
+
   openSettings() {
     this.showSettings.set(true);
+  }
+
+  openShareModal() {
+    const workouts = this.workouts();
+    const uniqueExercises = getUniqueExerciseNames(workouts);
+
+    this.shareStats.set({
+      workouts: workouts.length,
+      volume: calculateTotalVolume(workouts),
+      exercises: uniqueExercises.size
+    });
+
+    this.showShareModal.set(true);
   }
 
   closeSettings() {
@@ -61,13 +87,7 @@ export class DashboardComponent implements OnInit {
   totalWorkouts = computed(() => this.workouts().length);
   totalExercises = computed(() => this.workouts().reduce((acc: number, w: Workout) => acc + w.exercises.length, 0));
   totalSets = computed(() => this.workouts().reduce((acc: number, w: Workout) => acc + w.exercises.reduce((exAcc: number, ex: any) => exAcc + ex.sets.length, 0), 0));
-  totalVolume = computed(() => {
-    return this.workouts().reduce((acc: number, w: Workout) => {
-      return acc + w.exercises.reduce((exAcc: number, ex: any) => {
-        return exAcc + ex.sets.reduce((setAcc: number, set: any) => setAcc + (set.weight * set.reps), 0);
-      }, 0);
-    }, 0);
-  });
+  totalVolume = computed(() => calculateTotalVolume(this.workouts()));
 
   // --- Charts Logic ---
 
@@ -474,20 +494,18 @@ export class DashboardComponent implements OnInit {
 
   public heatmapGrid = computed(() => {
     const workouts = this.workouts();
-    // Dictionary of DateString (YYYY-MM-DD) -> Count
     const counts: Record<string, number> = {};
     workouts.forEach(w => {
-      const dateStr = new Date(w.date).toISOString().split('T')[0];
+      const dateStr = toISODateKey(new Date(w.date));
       counts[dateStr] = (counts[dateStr] || 0) + 1;
     });
 
-    // Generate last 365 days
     const grid = [];
     const today = new Date();
     for (let i = 0; i < 365; i++) {
       const d = new Date(today);
       d.setDate(today.getDate() - (364 - i));
-      const dateStr = d.toISOString().split('T')[0];
+      const dateStr = toISODateKey(d);
       const count = counts[dateStr] || 0;
 
       let level = 0;
@@ -536,21 +554,14 @@ export class DashboardComponent implements OnInit {
     const dataPoints: { x: number, y: number, r: number, dateStr: string }[] = [];
 
     this.workouts().forEach((w: Workout) => {
-      let totalVolume = 0;
-      let totalReps = 0;
-
-      w.exercises.forEach((ex: any) => {
-        ex.sets.forEach((s: any) => {
-          totalVolume += (s.weight * s.reps);
-          totalReps += s.reps;
-        });
-      });
+      const workoutVolume = calculateWorkoutVolume(w);
+      const totalReps = w.exercises.reduce((acc, ex) => acc + ex.sets.reduce((sAcc, s) => sAcc + s.reps, 0), 0);
 
       if (totalReps > 0) {
-        const avgIntensity = totalVolume / totalReps;
+        const avgIntensity = workoutVolume / totalReps;
         dataPoints.push({
           x: avgIntensity,
-          y: totalVolume,
+          y: workoutVolume,
           r: 6,
           dateStr: new Date(w.date).toLocaleDateString()
         });

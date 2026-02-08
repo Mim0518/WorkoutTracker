@@ -34,19 +34,43 @@
                                     i18n="@@settings.dataManagement">Data Management</h4>
 
                                 <div class="space-y-3">
-                                    <!-- Export Data -->
+                                    <!-- Export Data (JSON) -->
                                     <div class="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
                                         <div>
-                                            <p class="text-sm font-medium text-white" i18n="@@settings.export">Export
+                                            <p class="text-sm font-medium text-white" i18n="@@settings.export">Backup
                                                 Data</p>
-                                            <p class="text-xs text-gray-500" i18n="@@settings.exportDesc">Download a
-                                                backup of your history</p>
+                                            <p class="text-xs text-gray-500" i18n="@@settings.exportDesc">Download full
+                                                backup (JSON)</p>
                                         </div>
-                                        <button (click)="exportData()"
-                                            class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded transition-colors"
-                                            i18n="@@settings.exportButton">
-                                            Export
-                                        </button>
+                                        <div class="flex space-x-2">
+                                            <button (click)="exportData()"
+                                                class="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white text-xs rounded transition-colors"
+                                                i18n="@@settings.exportButton">
+                                                JSON
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Export Spreadsheet -->
+                                    <div class="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
+                                        <div>
+                                            <p class="text-sm font-medium text-white"
+                                                i18n="@@settings.exportSpreadsheet">Export Spreadsheet</p>
+                                            <p class="text-xs text-gray-500" i18n="@@settings.exportSpreadsheetDesc">
+                                                Analyze in Excel/Sheets</p>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button (click)="exportCsv()"
+                                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded transition-colors"
+                                                i18n="@@settings.exportCsvButton">
+                                                CSV
+                                            </button>
+                                            <button (click)="exportExcel()"
+                                                class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded transition-colors"
+                                                i18n="@@settings.exportExcelButton">
+                                                Excel
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <!-- Import Data -->

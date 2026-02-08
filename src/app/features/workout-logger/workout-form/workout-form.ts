@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { WorkoutService } from '../../../services/workout.service';
 import { PredictionService } from '../../../services/prediction.service';
+import { ConfettiService } from '../../../services/confetti.service';
 import { Workout } from '../../../models/workout.model';
 import { EXERCISE_LIST } from '../../../models/exercise-list.data';
 import { v4 as uuidv4 } from 'uuid';
@@ -33,6 +34,7 @@ export class WorkoutFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private workoutService = inject(WorkoutService);
   private predictionService = inject(PredictionService);
+  private confettiService = inject(ConfettiService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -253,7 +255,7 @@ export class WorkoutFormComponent implements OnInit {
   }
 
 
-  onSubmit() {
+  async onSubmit() {
     if (this.workoutForm.valid) {
       const formValue = this.workoutForm.value;
       const workoutData: Workout = {
@@ -266,13 +268,43 @@ export class WorkoutFormComponent implements OnInit {
         exercises: formValue.exercises
       };
 
+      let newPRs: any[] = [];
+
       if (this.isEditMode) {
-        this.workoutService.updateWorkout(workoutData);
+        newPRs = await this.workoutService.updateWorkout(workoutData);
       } else {
-        this.workoutService.addWorkout(workoutData);
+        newPRs = await this.workoutService.addWorkout(workoutData);
       }
 
-      this.router.navigate(['/workouts']);
+      if (newPRs.length > 0) {
+        this.confettiService.celebrate();
+
+        // Create a nice message
+        const prCount = newPRs.length;
+        let msg = '';
+
+        if (prCount === 1) {
+          const typeLabels: { [key: string]: string } = {
+            '1RM': '1RM',
+            'MaxWeight': $localize`:@@pr.type.maxWeight:Max Weight`,
+            'Volume': $localize`:@@pr.type.volume:Volume`,
+            'RepMax': $localize`:@@pr.type.repMax:Max Reps`
+          };
+          const type = typeLabels[newPRs[0].type as keyof typeof typeLabels] || newPRs[0].type;
+          msg = $localize`:@@pr.newRecordMessage:New Record: ${newPRs[0].exerciseName} - ${type}`;
+        } else {
+          msg = $localize`:@@pr.multipleRecordsGeneric:New Personal Records!`;
+        }
+
+        // Simple feedback for now (Phase 2)
+        // We delay navigation slightly to let the user see the confetti start
+        setTimeout(() => {
+          alert(`🎉 ${msg}`);
+          this.router.navigate(['/workouts']);
+        }, 500);
+      } else {
+        this.router.navigate(['/workouts']);
+      }
     }
   }
 

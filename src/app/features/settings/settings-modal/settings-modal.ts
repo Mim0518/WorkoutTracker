@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, inject, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WorkoutService } from '../../../services/workout.service';
+import { ExportService } from '../../../services/export.service';
 
 @Component({
     selector: 'app-settings-modal',
@@ -14,6 +15,7 @@ export class SettingsModalComponent {
     @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
     private workoutService = inject(WorkoutService);
+    private exportService = inject(ExportService);
 
     closeModal() {
         this.close.emit();
@@ -27,6 +29,14 @@ export class SettingsModalComponent {
 
     exportData() {
         this.workoutService.exportData();
+    }
+
+    exportCsv() {
+        this.exportService.exportToCsv(this.workoutService.workouts());
+    }
+
+    exportExcel() {
+        this.exportService.exportToExcel(this.workoutService.workouts());
     }
 
     triggerImport() {

@@ -1,14 +1,19 @@
 
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { Workout } from '../models/workout.model';
 import { db } from '../db/workout-db';
 import { MockDataGenerator } from '../utils/mock-data.generator';
+import { PRService, PRNotification } from './pr.service';
+import { toInputDateString } from '../utils/date.utils';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WorkoutService {
     private workoutsSignal = signal<Workout[]>([]);
+
+    // Simple injection (WorkoutService -> PRService is fine as PRService only depends on DB)
+    private prService = inject(PRService);
 
     workouts = computed(() => this.workoutsSignal());
 
@@ -39,22 +44,36 @@ export class WorkoutService {
         }
     }
 
-    async addWorkout(workout: Workout) {
+    async addWorkout(workout: Workout): Promise<PRNotification[]> {
         try {
             await db.workouts.add(workout);
+            // Check for PRs
+            const newPRs = await this.prService.checkForPRs(workout);
+            if (newPRs.length > 0) {
+                console.log('New PRs!', newPRs);
+            }
+
             // Reload to ensure consistency (or we could optimistically update the signal)
             await this.loadWorkouts();
+            return newPRs;
         } catch (error) {
             console.error('Failed to add workout', error);
+            return [];
         }
     }
 
-    async updateWorkout(updatedWorkout: Workout) {
+    async updateWorkout(updatedWorkout: Workout): Promise<PRNotification[]> {
         try {
             await db.workouts.put(updatedWorkout);
+
+            // Check for PRs
+            const newPRs = await this.prService.checkForPRs(updatedWorkout);
+
             await this.loadWorkouts();
+            return newPRs;
         } catch (error) {
             console.error('Failed to update workout', error);
+            return [];
         }
     }
 
@@ -85,7 +104,7 @@ export class WorkoutService {
 
             const a = document.createElement('a');
             a.href = url;
-            const date = new Date().toISOString().split('T')[0];
+            const date = toInputDateString(new Date());
             a.download = `workout-tracker-backup-${date}.json`;
             a.click();
 
@@ -123,6 +142,11 @@ export class WorkoutService {
                         await db.workouts.clear();
                         await db.workouts.bulkAdd(parsedData);
                     });
+
+                    // Recalculate PRs from scratch
+                    // We need to fetch all workouts properly typed to pass to recalculate
+                    const allWorkouts = await db.workouts.orderBy('date').toArray();
+                    await this.prService.recalculateAllPRs(allWorkouts);
 
                     window.location.reload();
                     resolve();

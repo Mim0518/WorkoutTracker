@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { WorkoutService } from '../../../services/workout.service';
+import { calculateWorkoutVolume } from '../../../utils/workout.utils';
+import { Workout } from '../../../models/workout.model';
 
 @Component({
   selector: 'app-workout-list',
@@ -20,9 +22,7 @@ export class WorkoutListComponent {
     }
   }
 
-  calculateTotalVolume(workout: any): number {
-    return workout.exercises.reduce((acc: number, ex: any) => {
-      return acc + ex.sets.reduce((sAcc: number, s: any) => sAcc + (s.weight * s.reps), 0);
-    }, 0);
+  calculateTotalVolume(workout: Workout): number {
+    return calculateWorkoutVolume(workout);
   }
 }

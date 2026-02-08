@@ -364,6 +364,82 @@
         <source>You've been crushing <x id="exerciseName"/> . Try <x id="weight"/> kg next time!</source>
         <target>¡Has estado arrasando con <x id="exerciseName"/>! ¡Intenta con <x id="weight"/>kg la próxima vez!</target>
       </trans-unit>
+      <trans-unit id="settings.exportSpreadsheet" datatype="html">
+        <source>Export Spreadsheet</source>
+        <target>Exportar Hoja de Cálculo</target>
+      </trans-unit>
+      <trans-unit id="settings.exportSpreadsheetDesc" datatype="html">
+        <source>Analyze in Excel/Sheets</source>
+        <target>Analizar en Excel/Sheets</target>
+      </trans-unit>
+      <trans-unit id="settings.exportCsvButton" datatype="html">
+        <source>CSV</source>
+        <target>CSV</target>
+      </trans-unit>
+      <trans-unit id="settings.exportExcelButton" datatype="html">
+        <source>Excel</source>
+        <target>Excel</target>
+      </trans-unit>
+      <trans-unit id="dashboard.downloadReport" datatype="html">
+        <source>Download Report</source>
+        <target>Descargar Reporte</target>
+      </trans-unit>
+      <trans-unit id="dashboard.shareProgress" datatype="html">
+        <source>Share Progress</source>
+        <target>Compartir Progreso</target>
+      </trans-unit>
+      <trans-unit id="share.title" datatype="html">
+        <source>Share Your Progress</source>
+        <target>Comparte Tu Progreso</target>
+      </trans-unit>
+      <trans-unit id="share.totalWorkouts" datatype="html">
+        <source>Total Workouts</source>
+        <target>Entrenamientos Totales</target>
+      </trans-unit>
+      <trans-unit id="share.volumeMoved" datatype="html">
+        <source>Volume Moved</source>
+        <target>Volumen Movido</target>
+      </trans-unit>
+      <trans-unit id="share.exercisesMastered" datatype="html">
+        <source>Exercises</source>
+        <target>Ejercicios</target>
+      </trans-unit>
+      <trans-unit id="share.cancel" datatype="html">
+        <source>Cancel</source>
+        <target>Cancelar</target>
+      </trans-unit>
+      <trans-unit id="share.download" datatype="html">
+        <source>Download Image</source>
+        <target>Descargar Imagen</target>
+      </trans-unit>
+      <trans-unit id="history.progressTitle" datatype="html">
+        <source>1RM Progression</source>
+        <target>Progresión de 1RM</target>
+      </trans-unit>
+      <trans-unit id="history.timelineTitle" datatype="html">
+        <source>PR Timeline</source>
+        <target>Cronología de Récords</target>
+      </trans-unit>
+      <trans-unit id="pr.type.maxWeight" datatype="html">
+        <source>Max Weight</source>
+        <target>Peso Máximo</target>
+      </trans-unit>
+      <trans-unit id="pr.type.volume" datatype="html">
+        <source>Volume</source>
+        <target>Volumen</target>
+      </trans-unit>
+      <trans-unit id="pr.type.repMax" datatype="html">
+        <source>Max Reps</source>
+        <target>Récord de Reps</target>
+      </trans-unit>
+      <trans-unit id="pr.newRecordMessage" datatype="html">
+        <source>New Record: <x id="pH0"/> - <x id="pH1"/></source>
+        <target>¡Nuevo Récord: <x id="pH0"/> - <x id="pH1"/>!</target>
+      </trans-unit>
+      <trans-unit id="pr.multipleRecordsGeneric" datatype="html">
+        <source>New Personal Records!</source>
+        <target>¡Nuevos Récords Personales!</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
