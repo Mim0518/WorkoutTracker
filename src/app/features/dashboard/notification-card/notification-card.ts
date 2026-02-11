@@ -18,6 +18,7 @@ export class NotificationCardComponent {
       case 'progressive-overload': return '📈';
       case 'deload': return '🛌';
       case 'weight-suggestion': return '💡';
+      case 'personal-record': return '🏆';
       default: return '📢';
     }
   }
@@ -27,6 +28,7 @@ export class NotificationCardComponent {
       case 'progressive-overload': return 'bg-green-900/30 border-green-700/50 text-green-100';
       case 'deload': return 'bg-yellow-900/30 border-yellow-700/50 text-yellow-100';
       case 'weight-suggestion': return 'bg-blue-900/30 border-blue-700/50 text-blue-100';
+      case 'personal-record': return 'bg-purple-900/30 border-purple-700/50 text-purple-100';
       default: return 'bg-gray-800 border-gray-700 text-gray-100';
     }
   }

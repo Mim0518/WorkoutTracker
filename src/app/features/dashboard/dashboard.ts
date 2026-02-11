@@ -46,16 +46,22 @@ export class DashboardComponent implements OnInit {
   }
 
   async loadNotifications() {
-    const notifs = await this.predictionService.getReadinessNotifications();
-    this.notifications.set(notifs);
+    const predictionNotifs = await this.predictionService.getReadinessNotifications();
+    const prNotifs = this.workoutService.pendingPRNotifications();
+    // PR cards first (most important), then prediction cards
+    this.notifications.set([...prNotifs, ...predictionNotifs]);
   }
 
   dismissNotification(index: number) {
-    // In a real app, we might want to store dismissed IDs in local storage to prevent reappearance
-    // For now, just remove from UI
     const current = [...this.notifications()];
+    const dismissed = current[index];
     current.splice(index, 1);
     this.notifications.set(current);
+
+    // If it was a PR notification, also clear it from the service
+    if (dismissed?.type === 'personal-record') {
+      this.workoutService.clearPRNotifications();
+    }
   }
 
   generateReport() {

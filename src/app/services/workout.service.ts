@@ -4,6 +4,7 @@ import { Workout } from '../models/workout.model';
 import { db } from '../db/workout-db';
 import { MockDataGenerator } from '../utils/mock-data.generator';
 import { PRService, PRNotification } from './pr.service';
+import { WorkoutNotification } from './prediction.service';
 import { toInputDateString } from '../utils/date.utils';
 
 @Injectable({
@@ -11,11 +12,13 @@ import { toInputDateString } from '../utils/date.utils';
 })
 export class WorkoutService {
     private workoutsSignal = signal<Workout[]>([]);
+    private prNotificationsSignal = signal<WorkoutNotification[]>([]);
 
     // Simple injection (WorkoutService -> PRService is fine as PRService only depends on DB)
     private prService = inject(PRService);
 
     workouts = computed(() => this.workoutsSignal());
+    pendingPRNotifications = computed(() => this.prNotificationsSignal());
 
     constructor() {
         this.loadWorkouts();
@@ -50,7 +53,7 @@ export class WorkoutService {
             // Check for PRs
             const newPRs = await this.prService.checkForPRs(workout);
             if (newPRs.length > 0) {
-                console.log('New PRs!', newPRs);
+                this.storePRNotifications(newPRs);
             }
 
             // Reload to ensure consistency (or we could optimistically update the signal)
@@ -68,6 +71,9 @@ export class WorkoutService {
 
             // Check for PRs
             const newPRs = await this.prService.checkForPRs(updatedWorkout);
+            if (newPRs.length > 0) {
+                this.storePRNotifications(newPRs);
+            }
 
             await this.loadWorkouts();
             return newPRs;
@@ -75,6 +81,43 @@ export class WorkoutService {
             console.error('Failed to update workout', error);
             return [];
         }
+    }
+
+    private storePRNotifications(prs: PRNotification[]) {
+        const typeLabels: { [key: string]: string } = {
+            '1RM': '1RM',
+            'MaxWeight': $localize`:@@pr.type.maxWeight:Max Weight`,
+            'Volume': $localize`:@@pr.type.volume:Volume`,
+            'RepMax': $localize`:@@pr.type.repMax:Max Reps`
+        };
+
+        const cards: WorkoutNotification[] = prs.map(pr => {
+            // Estimated 1RM is calculated, not actually performed — show as informational
+            if (pr.type === '1RM') {
+                return {
+                    type: 'weight-suggestion' as const,
+                    title: $localize`:@@pr.card.estimated1rm:Estimated 1RM Updated`,
+                    message: `${pr.exerciseName} — ${$localize`:@@pr.card.estimated1rmDetail:Est. 1RM`}: ${pr.value}kg`,
+                    exerciseName: pr.exerciseName,
+                    actionable: false
+                };
+            }
+
+            // Real PRs: Max Weight, Volume, Max Reps
+            return {
+                type: 'personal-record' as const,
+                title: $localize`:@@pr.card.title:New Personal Record!`,
+                message: `${pr.exerciseName} — ${typeLabels[pr.type] || pr.type}: ${pr.value}`,
+                exerciseName: pr.exerciseName,
+                actionable: false
+            };
+        });
+
+        this.prNotificationsSignal.update(existing => [...existing, ...cards]);
+    }
+
+    clearPRNotifications() {
+        this.prNotificationsSignal.set([]);
     }
 
     async deleteWorkout(id: string) {

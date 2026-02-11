@@ -17,7 +17,7 @@ export interface DeloadRecommendation {
 }
 
 export interface WorkoutNotification {
-    type: 'progressive-overload' | 'deload' | 'weight-suggestion';
+    type: 'progressive-overload' | 'deload' | 'weight-suggestion' | 'personal-record';
     title: string;
     message: string;
     exerciseName?: string;

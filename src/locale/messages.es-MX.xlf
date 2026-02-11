@@ -440,6 +440,18 @@
         <source>New Personal Records!</source>
         <target>¡Nuevos Récords Personales!</target>
       </trans-unit>
+      <trans-unit id="pr.card.title" datatype="html">
+        <source>New Personal Record!</source>
+        <target>¡Nuevo Récord Personal!</target>
+      </trans-unit>
+      <trans-unit id="pr.card.estimated1rm" datatype="html">
+        <source>Estimated 1RM Updated</source>
+        <target>1RM Estimado Actualizado</target>
+      </trans-unit>
+      <trans-unit id="pr.card.estimated1rmDetail" datatype="html">
+        <source>Est. 1RM</source>
+        <target>1RM Est.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
